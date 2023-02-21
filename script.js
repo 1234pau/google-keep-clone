@@ -3,6 +3,9 @@ const closeIcon = document.querySelector(".closeIcon")
 const searchIcon = document.querySelector(".searchIcon")
 const searchBox = document.querySelector(".searchBox")
 const body = document.querySelector("body")
+const menuIcon = document.querySelector(".menuIcon")
+const LeftBar = document.querySelector(".LeftBar")
+const iconNav = [...document.querySelectorAll(".iconNav")]
 
 containerSearch.addEventListener("click", (e) => {
     e.stopPropagation()
@@ -27,3 +30,23 @@ function setModeSearcBar(item) {
 
 setModeSearcBar(document)
 setModeSearcBar(closeIcon)
+let cond = true
+menuIcon.addEventListener("click", () => {
+    if (cond) {
+        LeftBar.style.width = "85px"
+        for (const icon of iconNav) {
+            icon.classList.remove("iconNav")
+            icon.classList.add("iconNavClass")
+        }
+        cond = false
+        console.log(cond)
+    } else if (cond === false) {
+        cond = true
+        LeftBar.style.width = "250px"
+        for (const icon of iconNav) {
+            icon.classList.remove("iconNavClass")
+            icon.classList.add("iconNav")
+        }
+        console.log(cond)
+    }
+})

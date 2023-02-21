@@ -1,6 +1,7 @@
 :root {
     --myBorderColor: rgb(180, 180, 180);
     --myBackgroundColor: #202124;
+    --myHoverNavColor: #2f2f31;
 }
 
 * {
@@ -33,6 +34,7 @@ body {
 .menuIcon {
     width: 30px;
     color: var(--myBorderColor);
+    cursor: pointer;
 }
 
 .containerLogo {
@@ -49,7 +51,7 @@ body {
 .containerLogo span {
     color: white;
     font-size: 20px;
-    font-weight: 700;
+    font-weight: 400;
     margin-left: 10px;
 }
 
@@ -126,4 +128,66 @@ body {
 
 .closeIcon {
     visibility: hidden;
+}
+
+.LeftBar {
+    width: 250px;
+    height: calc(100vh - 95px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0 20px 0;
+    box-shadow: 10px 0 8px rgba(0, 0, 0, 0.1);
+}
+
+.LeftBar .containerLeftBar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: 50%;
+    padding: 10px 0;
+}
+
+.LeftBar .containerLeftBar .iconNav {
+    padding: 10px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    margin: auto 0;
+}
+
+.LeftBar .containerLeftBar .iconNavClass {
+    margin-top: -1px;
+}
+
+.iconNavClass {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.iconNavClass:hover {
+    background-color: var(--myHoverNavColor);
+}
+
+.LeftBar .containerLeftBar .iconNavClass svg {
+    width: 25px;
+    height: 25px;
+    color: var(--myBorderColor);
+}
+
+.LeftBar .containerLeftBar .iconNav:hover {
+    background-color: var(--myHoverNavColor);
+}
+
+.LeftBar .containerLeftBar .iconNav svg {
+    width: 25px;
+    height: 25px;
+    color: var(--myBorderColor);
+    margin-left: 20px;
 }
