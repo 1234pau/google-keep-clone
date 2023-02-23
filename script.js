@@ -9,8 +9,11 @@ const LeftBar = document.querySelector(".LeftBar")
 const MidleContent = document.querySelector(".MidleContent")
 const AddCard = document.querySelector(".AddCard")
 const textNote = document.querySelector(".textNote")
+const textNoteImput = document.querySelector(".textNoteImput")
 const titleAndPinIcon = document.querySelector(".titleAndPinIcon")
+const titleInput = document.querySelector(".titleInput")
 const iconsAction = document.querySelector(".iconsAction")
+const iconsBtn = document.querySelector(".iconsBtn")
 const closeBtn = document.querySelector(".closeBtnItself")
 const iconNav = [...document.querySelectorAll(".iconNav")]
 
@@ -67,19 +70,36 @@ textNote.addEventListener("click", (e) => {
     cond2 = false
 })
 document.addEventListener("click", (e) => {
-        e.stopPropagation()
+        // e.stopPropagation()
 
         cond2 = true
+        if (e.target == AddCard ||
+            e.target == titleAndPinIcon ||
+            e.target == iconsAction ||
+            e.target == textNoteImput ||
+            e.target == titleInput ||
+            e.target == iconsBtn
+        ) {
+
+            return
+        }
+        console.log(e.target)
         if (e.target == closeBtn || cond2) {
             titleAndPinIcon.style.display = "none"
             iconsAction.style.display = "none"
             console.log(cond2)
             console.log(e.target)
         }
+        // if (e.target == closeBtn || cond2) {
+        //     titleAndPinIcon.style.display = "none"
+        //     iconsAction.style.display = "none"
+        //     console.log(cond2)
+        //     console.log(e.target)
+        // }
 
         // console.log(e.target)
 
-    })
+    }, true)
     // closeBtn.addEventListener("click", () => {
     //     titleAndPinIcon.style.display = "none"
     //     iconsAction.style.display = "none"
