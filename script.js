@@ -9,12 +9,15 @@ const LeftBar = document.querySelector(".LeftBar")
 const MidleContent = document.querySelector(".MidleContent")
 const AddCard = document.querySelector(".AddCard")
 const textNote = document.querySelector(".textNote")
-const textNoteImput = document.querySelector(".textNoteImput")
+const textNoteImput = document.querySelector(".textNoteImput") // textarea imput
+const titleInput = document.querySelector(".titleInput") // title imput
 const titleAndPinIcon = document.querySelector(".titleAndPinIcon")
-const titleInput = document.querySelector(".titleInput")
 const iconsAction = document.querySelector(".iconsAction")
 const iconsBtn = document.querySelector(".iconsBtn")
 const closeBtn = document.querySelector(".closeBtnItself")
+const checkBox = document.querySelector(".checkBox")
+const labelIc = document.querySelector(".labelIc")
+const containerNotes = document.querySelector(".containerNotes")
 const iconNav = [...document.querySelectorAll(".iconNav")]
 
 // make search bar styling
@@ -70,37 +73,34 @@ textNote.addEventListener("click", (e) => {
     cond2 = false
 })
 document.addEventListener("click", (e) => {
-        // e.stopPropagation()
+    // e.stopPropagation()
+    const parentEl = e.target
+    if ((parentEl == AddCard ||
+            parentEl.parentNode.parentNode.parentNode.parentNode == AddCard ||
+            parentEl.parentNode.parentNode.parentNode == AddCard ||
+            parentEl.parentNode.parentNode == AddCard ||
+            parentEl.parentNode == AddCard) && (parentEl !== closeBtn)) {
+        return
+    }
+    titleAndPinIcon.style.display = "none"
+    iconsAction.style.display = "none"
+    createCardNote()
+    textNoteImput.value = ""
+    titleInput.value = ""
+})
+const createCardNote = () => {
+    const parentDiv = document.createElement("div")
+    parentDiv.classList.add("parentDivNote")
 
-        cond2 = true
-        if (e.target == AddCard ||
-            e.target == titleAndPinIcon ||
-            e.target == iconsAction ||
-            e.target == textNoteImput ||
-            e.target == titleInput ||
-            e.target == iconsBtn
-        ) {
+    const titleValue = document.createElement("h2")
+    titleValue.classList.add("titleValue")
+    titleValue.innerHTML = titleInput.value
+    parentDiv.appendChild(titleValue)
 
-            return
-        }
-        console.log(e.target)
-        if (e.target == closeBtn || cond2) {
-            titleAndPinIcon.style.display = "none"
-            iconsAction.style.display = "none"
-            console.log(cond2)
-            console.log(e.target)
-        }
-        // if (e.target == closeBtn || cond2) {
-        //     titleAndPinIcon.style.display = "none"
-        //     iconsAction.style.display = "none"
-        //     console.log(cond2)
-        //     console.log(e.target)
-        // }
+    const noteValue = document.createElement("p")
+    noteValue.classList.add("noteValue")
+    noteValue.innerHTML = textNoteImput.value
+    parentDiv.appendChild(noteValue)
 
-        // console.log(e.target)
-
-    }, true)
-    // closeBtn.addEventListener("click", () => {
-    //     titleAndPinIcon.style.display = "none"
-    //     iconsAction.style.display = "none"
-    // })
+    return containerNotes.appendChild(parentDiv)
+}

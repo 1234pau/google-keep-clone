@@ -299,7 +299,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 25%;
+    width: 30%;
     color: var(--myBorderColor);
 }
 
@@ -388,4 +388,39 @@ body {
     color: var(--myBorderColor);
     width: 20px;
     height: 20px;
+}
+
+.containerNotes {
+    width: 95%;
+    /* height: 100px; */
+    margin: 20px auto;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    border: 1px solid rgb(0, 255, 0);
+}
+
+.parentDivNote {
+    min-width: 220px;
+    height: 110px;
+    border-radius: 5px;
+    border: 1px solid red;
+    margin: 10px;
+    padding: 5px;
+}
+
+.titleValue {
+    color: white;
+    font-size: 18px;
+    margin-left: 5px;
+    margin-top: 5px;
+    letter-spacing: 1px;
+}
+
+.noteValue {
+    color: white;
+    font-size: 17px;
+    margin-left: 5px;
 }
