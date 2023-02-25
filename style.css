@@ -31,6 +31,20 @@ body {
     width: fit-content;
 }
 
+.containerMenuIcon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+    background-color: transparent;
+}
+
+.containerMenuIcon:hover {
+    background-color: var(--myHoverNavColor);
+}
+
 .menuIcon {
     width: 30px;
     color: var(--myBorderColor);
@@ -118,13 +132,38 @@ body {
 }
 
 .containerRight {
-    border: 1px solid red;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.containerRight:hover {
+    background-color: var(--myHoverNavColor);
 }
 
 .defoultLeyout {
     width: 30px;
     height: 30px;
     color: var(--myBorderColor);
+}
+
+.linearLeyout {
+    width: 25px;
+    height: 30px;
+    color: var(--myBorderColor);
+}
+
+.active {
+    display: block;
+}
+
+.inactive {
+    display: none;
 }
 
 .closeIcon {
@@ -392,14 +431,22 @@ body {
 
 .containerNotes {
     width: 95%;
-    /* height: 100px; */
     margin: 20px auto;
     padding: 10px;
+    border: 1px solid rgb(0, 255, 0);
+}
+
+.normalFlex {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     flex-wrap: wrap;
-    border: 1px solid rgb(0, 255, 0);
+}
+
+.columnFlex {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 
 .parentDivNote {
@@ -423,4 +470,52 @@ body {
     color: white;
     font-size: 17px;
     margin-left: 5px;
+}
+
+.containerReminder {
+    width: 95%;
+    margin: 20px auto;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    border: 1px solid rgb(0, 255, 0);
+    display: none;
+}
+
+.containerLabel {
+    width: 95%;
+    margin: 20px auto;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    border: 1px solid rgb(0, 255, 0);
+    display: none;
+}
+
+.containerArchive {
+    width: 95%;
+    margin: 20px auto;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    border: 1px solid rgb(0, 255, 0);
+    display: none;
+}
+
+.containerDelete {
+    width: 95%;
+    margin: 20px auto;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    border: 1px solid rgb(0, 255, 0);
+    display: none;
 }

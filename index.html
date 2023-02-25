@@ -7,13 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Google Keep Clone</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
+    <script src="script.js" type="module" defer></script>
 </head>
 
 <body>
     <div class="TopBar">
         <div class="containerLeft">
-            <svg class="menuIcon" viewBox="0 0 24 24"><path fill="currentColor" d="M4 18q-.425 0-.713-.288T3 17q0-.425.288-.713T4 16h16q.425 0 .713.288T21 17q0 .425-.288.713T20 18H4Zm0-5q-.425 0-.713-.288T3 12q0-.425.288-.713T4 11h16q.425 0 .713.288T21 12q0 .425-.288.713T20 13H4Zm0-5q-.425 0-.713-.288T3 7q0-.425.288-.713T4 6h16q.425 0 .713.288T21 7q0 .425-.288.713T20 8H4Z"/></svg>
+            <div class="containerMenuIcon">
+                <svg class="menuIcon" viewBox="0 0 24 24"><path fill="currentColor" d="M4 18q-.425 0-.713-.288T3 17q0-.425.288-.713T4 16h16q.425 0 .713.288T21 17q0 .425-.288.713T20 18H4Zm0-5q-.425 0-.713-.288T3 12q0-.425.288-.713T4 11h16q.425 0 .713.288T21 12q0 .425-.288.713T20 13H4Zm0-5q-.425 0-.713-.288T3 7q0-.425.288-.713T4 6h16q.425 0 .713.288T21 7q0 .425-.288.713T20 8H4Z"/></svg>
+            </div>
             <div class="containerLogo">
                 <svg class="logo" viewBox="0 0 256 352"><path fill="#FFBA00" d="M232 352H24c-13.28 0-24-10.72-24-24V24C0 10.72 10.72 0 24 0h144l88 88v240c0 13.28-10.72 24-24 24Z"/><path fill="#FF9500" d="m168 0l88 88h-88z"/><path fill="#FFF" d="M156 236v20h-56v-20h56Zm-28.08-115.999l.78.006c28.323.46 51.14 23.56 51.14 51.993c0 18.56-9.72 34.8-24.32 44h-55.2C85.68 206.8 76 190.56 76 172c0-28.72 23.28-52 52-52l-.08.001Z"/></svg>
                 <span>KeepC</span>
@@ -27,22 +29,23 @@
             </div>
         </div>
         <div class="containerRight">
-            <svg class="defoultLeyout" viewBox="0 0 256 256"><path fill="currentColor" d="M112 40H48a8 8 0 0 0-8 8v64a8 8 0 0 0 8 8h64a8 8 0 0 0 8-8V48a8 8 0 0 0-8-8Zm-8 64H56V56h48Zm104-64h-64a8 8 0 0 0-8 8v64a8 8 0 0 0 8 8h64a8 8 0 0 0 8-8V48a8 8 0 0 0-8-8Zm-8 64h-48V56h48Zm-88 32H48a8 8 0 0 0-8 8v64a8 8 0 0 0 8 8h64a8 8 0 0 0 8-8v-64a8 8 0 0 0-8-8Zm-8 64H56v-48h48Zm104-64h-64a8 8 0 0 0-8 8v64a8 8 0 0 0 8 8h64a8 8 0 0 0 8-8v-64a8 8 0 0 0-8-8Zm-8 64h-48v-48h48Z"/></svg>
+            <svg class="linearLeyout active" viewBox="0 0 16 16"><path fill="currentColor" d="M14.82 2.5H1.18C.53 2.5 0 3.03 0 3.68V6.2c0 .65.53 1.18 1.18 1.18h13.64c.65 0 1.18-.53 1.18-1.18V3.68c0-.65-.53-1.18-1.18-1.18zm-.07 3.62H1.25V3.75h13.5v2.37zm.07 2.5H1.18C.53 8.62 0 9.15 0 9.8v2.52c0 .65.53 1.18 1.18 1.18h13.64c.65 0 1.18-.53 1.18-1.18V9.8c0-.65-.53-1.18-1.18-1.18zm-.07 3.63H1.25V9.87h13.5v2.38z"/></svg>
+            <svg class="defoultLeyout inactive" viewBox="0 0 256 256"><path fill="currentColor" d="M112 40H48a8 8 0 0 0-8 8v64a8 8 0 0 0 8 8h64a8 8 0 0 0 8-8V48a8 8 0 0 0-8-8Zm-8 64H56V56h48Zm104-64h-64a8 8 0 0 0-8 8v64a8 8 0 0 0 8 8h64a8 8 0 0 0 8-8V48a8 8 0 0 0-8-8Zm-8 64h-48V56h48Zm-88 32H48a8 8 0 0 0-8 8v64a8 8 0 0 0 8 8h64a8 8 0 0 0 8-8v-64a8 8 0 0 0-8-8Zm-8 64H56v-48h48Zm104-64h-64a8 8 0 0 0-8 8v64a8 8 0 0 0 8 8h64a8 8 0 0 0 8-8v-64a8 8 0 0 0-8-8Zm-8 64h-48v-48h48Z"/></svg>
         </div>
     </div>
     <div class="LeftBar">
         <div class="containerLeftBar">
-            <div class="iconNav">
+            <div class="iconNav note">
                 <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7M9 21v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1m3-17a5 5 0 0 0-5 5c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58a5 5 0 0 0-5-5Z"/></svg>
             </div>
-            <div class="iconNav">
+            <div class="iconNav reminder">
                 <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3H4a4 4 0 0 0 2-3v-3a7 7 0 0 1 4-6M9 17v1a3 3 0 0 0 6 0v-1"/></svg>                </div>
-            <div class="iconNav">
+            <div class="iconNav label">
                 <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14 6l2.293-2.293a1 1 0 0 1 1.414 0l2.586 2.586a1 1 0 0 1 0 1.414L18 10m-4-4l-9.707 9.707a1 1 0 0 0-.293.707V19a1 1 0 0 0 1 1h2.586a1 1 0 0 0 .707-.293L18 10m-4-4l4 4"/></svg>                </div>
-            <div class="iconNav">
+            <div class="iconNav archive">
                 <svg viewBox="0 0 24 24"><path fill="currentColor" d="M2 6a2 2 0 0 1 2-2h5a1 1 0 0 1 .707.293L11.414 6H20a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6zm6.586 0H4v12h16V8h-9a1 1 0 0 1-.707-.293L8.586 6zM12 9.5a1 1 0 0 1 1 1v2.586l.293-.293a1 1 0 0 1 1.414 1.414l-2 2a1 1 0 0 1-1.414 0l-2-2a1 1 0 1 1 1.414-1.414l.293.293V10.5a1 1 0 0 1 1-1z"/></svg>
             </div>
-            <div class="iconNav">
+            <div class="iconNav delete">
                 <svg viewBox="0 0 24 24"><path fill="currentColor" d="M10 18a1 1 0 0 0 1-1v-6a1 1 0 0 0-2 0v6a1 1 0 0 0 1 1ZM20 6h-4V5a3 3 0 0 0-3-3h-2a3 3 0 0 0-3 3v1H4a1 1 0 0 0 0 2h1v11a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8h1a1 1 0 0 0 0-2ZM10 5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1h-4Zm7 14a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V8h10Zm-3-1a1 1 0 0 0 1-1v-6a1 1 0 0 0-2 0v6a1 1 0 0 0 1 1Z"/></svg>
             </div>
         </div>
@@ -89,7 +92,11 @@
                 </div>
             </div>
         </div>
-        <div class="containerNotes"></div>
+        <div class="containerNotes normalFlex"></div>
+        <div class="containerReminder">Reminder</div>
+        <div class="containerLabel">Label</div>
+        <div class="containerArchive">Archive</div>
+        <div class="containerDelete">Delete</div>
 
     </div>
 </body>

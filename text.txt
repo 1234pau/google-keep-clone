@@ -1,0 +1,28 @@
+if (icon.classList.contains("note")) {
+                if (containerNotes) {
+                    handleDisplay(containerNotes)
+                }
+                console.log("note")
+            } else if (icon.classList.contains("reminder")) {
+                if (containerReminder) {
+                    handleDisplay(containerReminder)
+                }
+                console.log("reminder")
+            } else if (icon.classList.contains("label")) {
+                if (containerLabel) {
+                    handleDisplay(containerLabel)
+                }
+                console.log("label")
+            } else if (icon.classList.contains("archive")) {
+                if (containerArchive) {
+                    handleDisplay(containerArchive)
+                }
+                console.log("archive")
+            } else if (icon.classList.contains("delete")) {
+                if (containerDelete) {
+                    handleDisplay(containerDelete)
+                }
+                console.log("delete")
+            } else {
+                return
+            }
