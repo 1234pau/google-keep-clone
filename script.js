@@ -27,7 +27,15 @@ import {
     containerRight,
     linearLeyout,
     iconNav
-} from "/elements.js"
+} from "/modules/elements.js"
+import { ReminderNote } from "./modules/reminderEl.js"
+import { PaleteNote } from "./modules/paleteEl.js"
+import { ArchiveNote } from "./modules/archiveEl.js"
+import { DeleteNote } from "./modules/deleteEl.js"
+import { ImageNote } from "./modules/imageEl.js"
+import { PinNote } from "./modules/pinEl.js"
+import { SelectNote } from "./modules/selectEl.js"
+
 
 // make search bar styling in white when click
 containerSearch.addEventListener("click", (e) => {
@@ -102,21 +110,67 @@ document.addEventListener("click", (e) => {
         titleInput.value = ""
     })
     // create card function
-const createCardNote = () => {
+const createCardNote = async() => {
         const parentDiv = document.createElement("div")
         parentDiv.classList.add("parentDivNote")
+
+        const selectIcon = document.createElement("select-note", SelectNote)
+        selectIcon.style.visibility = "hidden"
+        parentDiv.appendChild(selectIcon)
 
         const titleValue = document.createElement("h2")
         titleValue.classList.add("titleValue")
         titleValue.innerHTML = titleInput.value
-        parentDiv.appendChild(titleValue)
+
 
         const noteValue = document.createElement("p")
         noteValue.classList.add("noteValue")
         noteValue.innerHTML = textNoteImput.value
-        parentDiv.appendChild(noteValue)
 
-        return containerNotes.appendChild(parentDiv)
+        const textDiv = document.createElement("div")
+        textDiv.classList.add("textNoteContainer")
+        textDiv.appendChild(titleValue)
+        textDiv.appendChild(noteValue)
+        parentDiv.appendChild(textDiv)
+
+        const pinIcon = document.createElement("pin-note", PinNote)
+        pinIcon.style.visibility = "hidden"
+        parentDiv.appendChild(pinIcon)
+
+        const divBottomIconsNote = document.createElement("div")
+        divBottomIconsNote.classList.add("divBottomIconsNote")
+        parentDiv.appendChild(divBottomIconsNote)
+
+        const reminderBel = document.createElement("reminder-note", ReminderNote)
+        divBottomIconsNote.appendChild(reminderBel)
+
+        const paleteIcon = document.createElement("palete-note", PaleteNote)
+        divBottomIconsNote.appendChild(paleteIcon)
+
+        const imageIcon = document.createElement("image-note", ImageNote)
+        divBottomIconsNote.appendChild(imageIcon)
+
+        const archiveIcon = document.createElement("archive-note", ArchiveNote)
+        divBottomIconsNote.appendChild(archiveIcon)
+
+        const deleteIcon = document.createElement("delete-note", DeleteNote)
+        divBottomIconsNote.appendChild(deleteIcon)
+
+        if (parentDiv) {
+            parentDiv.addEventListener("mouseover", () => {
+                selectIcon.style.visibility = "visible"
+                pinIcon.style.visibility = "visible"
+                divBottomIconsNote.style.visibility = "visible"
+            })
+            parentDiv.addEventListener("mouseout", () => {
+                selectIcon.style.visibility = "hidden"
+                pinIcon.style.visibility = "hidden"
+                divBottomIconsNote.style.visibility = "hidden"
+            })
+        } else {
+            return
+        }
+        return await containerNotes.appendChild(parentDiv)
     }
     // handle display mode of pages when click the left bar icons
 const handleSections = () => {
