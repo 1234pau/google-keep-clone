@@ -1,3 +1,5 @@
+import { containerNotes } from "./elements.js"
+
 const template = document.createElement("template")
 template.innerHTML = `
 <style>
@@ -17,16 +19,23 @@ template.innerHTML = `
 .containerPinIcon:hover{
   background-color: var(--myHoverNavColor);
 }
-  .pinIcon{
+  svg{
     color: var(--myBorderColor);
     width: 25px;
     height: 25px;
+  }
+  .pinIconChecked{
+    
+    display: none;
   }
 </style>
 
 <div class="containerPinIcon">
   <svg class="pinIcon" viewBox="0 0 24 24">
     <path fill="currentColor" d="m16 12l2 2v2h-5v6l-1 1l-1-1v-6H6v-2l2-2V5H7V3h10v2h-1v7Zm-7.15 2h6.3L14 12.85V5h-4v7.85L8.85 14ZM12 14Z"/>
+  </svg>
+  <svg class="pinIconChecked" viewBox="0 0 24 24">
+    <path fill="currentColor" d="m16 12l2 2v2h-5v6l-1 1l-1-1v-6H6v-2l2-2V5H7V3h10v2h-1Z"/>
   </svg>
 </div>
 `
@@ -36,6 +45,28 @@ export class PinNote extends HTMLElement {
         super()
         this.attachShadow({ mode: "open" })
         this.shadowRoot.appendChild(template.content.cloneNode(true))
+    }
+
+    connectedCallback() {
+        this.shadowRoot.addEventListener("click", () => {
+            const checkPin = this.shadowRoot.querySelector(".pinIconChecked")
+            const pinIcon = this.shadowRoot.querySelector(".pinIcon")
+            const parentDiv = document.querySelector(".parentDivNote")
+            const actualePinnedContainer = document.querySelector(".actualePinnedContainer")
+            const pinnedContainer = document.querySelector(".pinnedContainer")
+
+            pinIcon.style.display = "none"
+            checkPin.style.display = "block"
+                // if (parentDiv.classList.contains("pinned")) {
+                //     pinIcon.style.display = "none"
+                //     checkPin.style.display = "block"
+
+            // } else {
+            //     pinIcon.style.display = "block"
+            //     checkPin.style.display = "none"
+            // }
+            // containerNotes.appendChild(parentDiv)
+        })
     }
 }
 customElements.define("pin-note", PinNote)
