@@ -27,7 +27,7 @@ import {
     containerRight,
     linearLeyout,
     iconNav
-} from "/modules/elements.js"
+} from "./modules/elements.js"
 import { ReminderNote } from "./modules/reminderEl.js"
 import { PaleteNote } from "./modules/paleteEl.js"
 import { ArchiveNote } from "./modules/archiveEl.js"

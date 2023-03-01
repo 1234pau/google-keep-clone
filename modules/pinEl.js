@@ -1,5 +1,3 @@
-import { containerNotes } from "./elements.js"
-
 const template = document.createElement("template")
 template.innerHTML = `
 <style>
@@ -49,12 +47,7 @@ export class PinNote extends HTMLElement {
     change(condition) {
         const checkPin = this.shadowRoot.querySelector(".pinIconChecked")
         const pinIcon = this.shadowRoot.querySelector(".pinIcon")
-
-        // const actualePinnedContainer = document.querySelector(".actualePinnedContainer")
-        // const pinnedContainer = document.querySelector(".pinnedContainer")
         const parentDiv = document.querySelector(".parentDivNote")
-            // const containerNotes = document.querySelector(".containerNotes")
-
 
         if (condition == true) {
             this.parentElement.classList.add("pinned")
