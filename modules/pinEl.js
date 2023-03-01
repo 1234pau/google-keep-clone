@@ -46,26 +46,33 @@ export class PinNote extends HTMLElement {
         this.attachShadow({ mode: "open" })
         this.shadowRoot.appendChild(template.content.cloneNode(true))
     }
+    change(condition) {
+        const checkPin = this.shadowRoot.querySelector(".pinIconChecked")
+        const pinIcon = this.shadowRoot.querySelector(".pinIcon")
 
-    connectedCallback() {
-        this.shadowRoot.addEventListener("click", () => {
-            const checkPin = this.shadowRoot.querySelector(".pinIconChecked")
-            const pinIcon = this.shadowRoot.querySelector(".pinIcon")
-            const parentDiv = document.querySelector(".parentDivNote")
-            const actualePinnedContainer = document.querySelector(".actualePinnedContainer")
-            const pinnedContainer = document.querySelector(".pinnedContainer")
+        // const actualePinnedContainer = document.querySelector(".actualePinnedContainer")
+        // const pinnedContainer = document.querySelector(".pinnedContainer")
+        const parentDiv = document.querySelector(".parentDivNote")
+            // const containerNotes = document.querySelector(".containerNotes")
 
+
+        if (condition == true) {
+            this.parentElement.classList.add("pinned")
             pinIcon.style.display = "none"
             checkPin.style.display = "block"
-                // if (parentDiv.classList.contains("pinned")) {
-                //     pinIcon.style.display = "none"
-                //     checkPin.style.display = "block"
-
-            // } else {
-            //     pinIcon.style.display = "block"
-            //     checkPin.style.display = "none"
-            // }
-            // containerNotes.appendChild(parentDiv)
+            condition = false
+        } else {
+            this.parentElement.classList.remove("pinned")
+            pinIcon.style.display = "block"
+            checkPin.style.display = "none"
+        }
+    }
+    connectedCallback() {
+        this.shadowRoot.querySelector(".pinIcon").addEventListener("click", () => {
+            this.change(true)
+        })
+        this.shadowRoot.querySelector(".pinIconChecked").addEventListener("click", () => {
+            this.change(false)
         })
     }
 }

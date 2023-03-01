@@ -170,17 +170,23 @@ const createCardNote = async() => {
         } else {
             return
         }
-        pinIcon.addEventListener("click", () => {
+        pinIcon.addEventListener("click", () => { // pin the card
             const actualePinnedContainer = document.querySelector(".actualePinnedContainer")
             const pinnedContainer = document.querySelector(".pinnedContainer")
 
-            pinnedContainer.classList.remove("none")
-            actualePinnedContainer.appendChild(parentDiv)
-            parentDiv.classList.add("pinned")
-            if (actualePinnedContainer.children.length === 0) {
+            pinnedContainer.classList.remove("none") // show the pinnedContainer
+            if (parentDiv.classList.contains("pinned")) { // if card has a class pinned attach it to actualePinnedContainer
+                actualePinnedContainer.appendChild(parentDiv)
+
+            } else { // else attach it to containerNotes
+                containerNotes.appendChild(parentDiv)
+            }
+            if (actualePinnedContainer.children.length === 0) { // if actualePinnedContainer has no children make it display none
                 pinnedContainer.classList.add("none")
             }
         })
+
+
         return await containerNotes.appendChild(parentDiv)
     }
     // handle display mode of pages when click the left bar icons
