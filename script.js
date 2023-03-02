@@ -26,7 +26,12 @@ import {
     defoultLeyout,
     containerRight,
     linearLeyout,
-    iconNav
+    iconNav,
+    pinIcon,
+    pinIconChecked,
+    pinIconContainer,
+    pinnedContainer,
+    actualePinnedContainer
 } from "./modules/elements.js"
 import { ReminderNote } from "./modules/reminderEl.js"
 import { PaleteNote } from "./modules/paleteEl.js"
@@ -48,14 +53,13 @@ containerSearch.addEventListener("click", (e) => {
         searchBox.classList.remove("searchBox")
     })
     // make search bar close when click the document (except search bar itself) or close icon
-function setModeSearcBar(item) {
+const setModeSearcBar = (item) => {
     item.addEventListener("click", (e) => {
         e.stopPropagation()
         containerSearch.style.backgroundColor = "rgb(85, 83, 83)"
         closeIcon.style.visibility = "hidden"
         searchIcon.style.color = "white"
         searchBox.classList.add("searchBox")
-
     })
 }
 setModeSearcBar(document)
@@ -100,9 +104,16 @@ document.addEventListener("click", (e) => {
         }
         titleAndPinIcon.style.display = "none"
         iconsAction.style.display = "none"
-        if (textNoteImput.value !== "" || titleInput.value !== "") { // if there is nothing in the imputs do not create the card
+
+        // if there is nothing in the imputs do not create the card
+        if (textNoteImput.value !== "" || titleInput.value !== "") {
             createCardNote()
+            pinIconContainer.classList.remove("pinnedIcon")
+            pinIcon.style.display = "block"
+            pinIconChecked.style.display = "none"
         } else {
+            pinIcon.style.display = "block"
+            pinIconChecked.style.display = "none"
             return
         }
         // clear the imputs
@@ -110,7 +121,7 @@ document.addEventListener("click", (e) => {
         titleInput.value = ""
     })
     // create card function
-const createCardNote = async() => {
+const createCardNote = () => {
         const parentDiv = document.createElement("div")
         parentDiv.classList.add("parentDivNote")
 
@@ -156,6 +167,7 @@ const createCardNote = async() => {
         const deleteIcon = document.createElement("delete-note", DeleteNote)
         divBottomIconsNote.appendChild(deleteIcon)
 
+        // handle hover effect on card
         if (parentDiv) {
             parentDiv.addEventListener("mouseover", () => {
                 selectIcon.style.visibility = "visible"
@@ -170,24 +182,53 @@ const createCardNote = async() => {
         } else {
             return
         }
-        pinIcon.addEventListener("click", () => { // pin the card
-            const actualePinnedContainer = document.querySelector(".actualePinnedContainer")
-            const pinnedContainer = document.querySelector(".pinnedContainer")
 
-            pinnedContainer.classList.remove("none") // show the pinnedContainer
-            if (parentDiv.classList.contains("pinned")) { // if card has a class pinned attach it to actualePinnedContainer
-                actualePinnedContainer.appendChild(parentDiv)
+        // pin the card
+        pinIcon.addEventListener("click", () => {
+                // show the pinnedContainer
+                pinnedContainer.classList.remove("none")
+                    // if card has a class pinned attach it to actualePinnedContainer
+                if (parentDiv.classList.contains("pinned")) {
+                    actualePinnedContainer.appendChild(parentDiv)
 
-            } else { // else attach it to containerNotes
-                containerNotes.appendChild(parentDiv)
-            }
-            if (actualePinnedContainer.children.length === 0) { // if actualePinnedContainer has no children make it display none
-                pinnedContainer.classList.add("none")
-            }
-        })
+                } else { // else attach it to containerNotes
+                    containerNotes.appendChild(parentDiv)
+                }
+                // if actualePinnedContainer has no children make it display none
+                if (actualePinnedContainer.children.length === 0) {
+                    pinnedContainer.classList.add("none")
+                }
+            })
+            // if pin icon from AddNote.titleAndPinIcon is full color add class pinned to parentDiv
+        if (pinIconContainer.classList.contains("pinnedIcon")) {
+            parentDiv.classList.add("pinned")
+        }
+        // handle selectIcon⭕⭕⭕
+        selectIcon.addEventListener("click", () => {
+                if (parentDiv.classList.contains("selected")) {
+                    parentDiv.style.border = "1px solid white"
+                    parentDiv.addEventListener("mouseout", () => {
+                        selectIcon.style.visibility = "visible"
+                        pinIcon.style.visibility = "visible"
+                        divBottomIconsNote.style.visibility = "hidden"
+                    })
+                    parentDiv.addEventListener("mouseover", () => {
+                        divBottomIconsNote.style.visibility = "hidden"
+                    })
+                    console.log(true)
+                } else {
+                    console.log(false)
+                }
+            })
+            // if parentDiv has a class of pinned append parentDiv to pinnedContainer.actualePinnedContainer
+        if (parentDiv.classList.contains("pinned")) {
+            pinnedContainer.classList.remove("none")
+            actualePinnedContainer.appendChild(parentDiv)
+            return actualePinnedContainer.appendChild(parentDiv)
+        } else { // if not append to containerNotes
+            return containerNotes.appendChild(parentDiv)
+        }
 
-
-        return await containerNotes.appendChild(parentDiv)
     }
     // handle display mode of pages when click the left bar icons
 const handleSections = () => {
@@ -225,7 +266,8 @@ const handleSections = () => {
     }
 }
 handleSections()
-const handleDisplay = (curentEl) => { // handle display for sections
+    // handle display for sections
+const handleDisplay = (curentEl) => {
         containerArchive.style.display = "none"
         containerLabel.style.display = "none"
         containerReminder.style.display = "none"
@@ -235,24 +277,44 @@ const handleDisplay = (curentEl) => { // handle display for sections
     }
     // handle display flex for cards and change right top icon
 containerRight.addEventListener("click", () => {
-    const firstEl = containerRight.children[0]
-    const secondEl = containerRight.children[1]
+        const firstEl = containerRight.children[0]
+        const secondEl = containerRight.children[1]
 
-    if (firstEl.classList.contains("active")) {
-        if (containerNotes.classList.contains("normalFlex")) {
-            firstEl.classList.remove("active")
-            firstEl.classList.add("inactive")
-            secondEl.classList.remove("inactive")
-            secondEl.classList.add("active")
-            containerNotes.classList.add("columnFlex")
-            containerNotes.classList.remove("normalFlex")
+        if (firstEl.classList.contains("active")) {
+            if (containerNotes.classList.contains("normalFlex")) {
+                firstEl.classList.remove("active")
+                firstEl.classList.add("inactive")
+                secondEl.classList.remove("inactive")
+                secondEl.classList.add("active")
+                containerNotes.classList.add("columnFlex")
+                containerNotes.classList.remove("normalFlex")
+            }
+        } else if (secondEl.classList.contains("active")) {
+            secondEl.classList.remove("active")
+            secondEl.classList.add("inactive")
+            firstEl.classList.remove("inactive")
+            firstEl.classList.add("active")
+            containerNotes.classList.remove("columnFlex")
+            containerNotes.classList.add("normalFlex")
         }
-    } else if (secondEl.classList.contains("active")) {
-        secondEl.classList.remove("active")
-        secondEl.classList.add("inactive")
-        firstEl.classList.remove("inactive")
-        firstEl.classList.add("active")
-        containerNotes.classList.remove("columnFlex")
-        containerNotes.classList.add("normalFlex")
+    })
+    // add class pinnedIcon to pin icon from AddNote.titleAndPinIcon
+const change = (condition) => {
+        if (condition == true) {
+            pinIconContainer.classList.add("pinnedIcon")
+            pinIcon.style.display = "none" // empty icon
+            pinIconChecked.style.display = "block" // full icon
+            condition = false
+        } else {
+            pinIconContainer.classList.remove("pinnedIcon")
+            pinIcon.style.display = "block"
+            pinIconChecked.style.display = "none"
+        }
     }
+    // handle click event acording to change function
+pinIcon.addEventListener("click", () => {
+    change(true)
+})
+pinIconChecked.addEventListener("click", () => {
+    change(false)
 })

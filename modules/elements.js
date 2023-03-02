@@ -24,11 +24,18 @@ const containerDelete = document.querySelector(".containerDelete")
 const defoultLeyout = document.querySelector(".defoultLeyout")
 const containerRight = document.querySelector(".containerRight")
 const linearLeyout = document.querySelector(".linearLeyout")
+const pinIcon = document.querySelector(".pinIcon")
+const pinIconChecked = document.querySelector(".pinIconChecked")
+const pinIconContainer = document.querySelector(".pinIconContainer")
+const actualePinnedContainer = document.querySelector(".actualePinnedContainer")
+const pinnedContainer = document.querySelector(".pinnedContainer")
 const iconNav = [...document.querySelectorAll(".iconNav")]
 
 export {
     containerSearch,
     closeIcon,
+    actualePinnedContainer,
+    pinnedContainer,
     searchIcon,
     searchBox,
     body,
@@ -53,5 +60,8 @@ export {
     defoultLeyout,
     containerRight,
     linearLeyout,
-    iconNav
+    iconNav,
+    pinIcon,
+    pinIconChecked,
+    pinIconContainer
 }

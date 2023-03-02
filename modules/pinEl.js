@@ -23,7 +23,6 @@ template.innerHTML = `
     height: 25px;
   }
   .pinIconChecked{
-    
     display: none;
   }
 </style>
@@ -44,10 +43,10 @@ export class PinNote extends HTMLElement {
         this.attachShadow({ mode: "open" })
         this.shadowRoot.appendChild(template.content.cloneNode(true))
     }
+
     change(condition) {
         const checkPin = this.shadowRoot.querySelector(".pinIconChecked")
         const pinIcon = this.shadowRoot.querySelector(".pinIcon")
-        const parentDiv = document.querySelector(".parentDivNote")
 
         if (condition == true) {
             this.parentElement.classList.add("pinned")
@@ -61,12 +60,25 @@ export class PinNote extends HTMLElement {
         }
     }
     connectedCallback() {
+        const parentDiv = document.querySelector(".parentDivNote")
+        const checkPin = this.shadowRoot.querySelector(".pinIconChecked")
+        const pinIcon = this.shadowRoot.querySelector(".pinIcon")
         this.shadowRoot.querySelector(".pinIcon").addEventListener("click", () => {
             this.change(true)
         })
         this.shadowRoot.querySelector(".pinIconChecked").addEventListener("click", () => {
-            this.change(false)
-        })
+                this.change(false)
+            })
+            // make pin icon full color if parentDiv has class pinned
+        if (this.parentElement.classList.contains("pinned")) {
+            pinIcon.style.display = "none"
+            checkPin.style.display = "block"
+        } else {
+            pinIcon.style.display = "block"
+            checkPin.style.display = "none"
+        }
+
+
     }
 }
 customElements.define("pin-note", PinNote)
