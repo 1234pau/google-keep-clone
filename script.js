@@ -31,7 +31,10 @@ import {
     pinIconChecked,
     pinIconContainer,
     pinnedContainer,
-    actualePinnedContainer
+    actualePinnedContainer,
+    selectedItemsDrop,
+    TopBar,
+    lengthOfItems
 } from "./modules/elements.js"
 import { ReminderNote } from "./modules/reminderEl.js"
 import { PaleteNote } from "./modules/paleteEl.js"
@@ -39,7 +42,8 @@ import { ArchiveNote } from "./modules/archiveEl.js"
 import { DeleteNote } from "./modules/deleteEl.js"
 import { ImageNote } from "./modules/imageEl.js"
 import { PinNote } from "./modules/pinEl.js"
-import { SelectNote } from "./modules/selectEl.js"
+import { SelectNote, parentDivLength } from "./modules/selectEl.js"
+import { selectFuture } from "./modules/selectFuture.js"
 
 
 // make search bar styling in white when click
@@ -121,9 +125,11 @@ document.addEventListener("click", (e) => {
         titleInput.value = ""
     })
     // create card function
+let n = 1
 const createCardNote = () => {
         const parentDiv = document.createElement("div")
         parentDiv.classList.add("parentDivNote")
+        parentDiv.id = n++;
 
         const selectIcon = document.createElement("select-note", SelectNote)
         selectIcon.style.visibility = "hidden"
@@ -183,7 +189,7 @@ const createCardNote = () => {
             return
         }
 
-        // pin the card
+        // pin the card 🟥
         pinIcon.addEventListener("click", () => {
                 // show the pinnedContainer
                 pinnedContainer.classList.remove("none")
@@ -203,24 +209,13 @@ const createCardNote = () => {
         if (pinIconContainer.classList.contains("pinnedIcon")) {
             parentDiv.classList.add("pinned")
         }
-        // handle selectIcon⭕⭕⭕
+        // handle selectIcon and function 🟥
         selectIcon.addEventListener("click", () => {
-                if (parentDiv.classList.contains("selected")) {
-                    parentDiv.style.border = "1px solid white"
-                    parentDiv.addEventListener("mouseout", () => {
-                        selectIcon.style.visibility = "visible"
-                        pinIcon.style.visibility = "visible"
-                        divBottomIconsNote.style.visibility = "hidden"
-                    })
-                    parentDiv.addEventListener("mouseover", () => {
-                        divBottomIconsNote.style.visibility = "hidden"
-                    })
-                    console.log(true)
-                } else {
-                    console.log(false)
-                }
-            })
-            // if parentDiv has a class of pinned append parentDiv to pinnedContainer.actualePinnedContainer
+            parentDivLength.push(parentDiv.id)
+            selectFuture(parentDivLength, parentDiv, TopBar, lengthOfItems, selectIcon, pinIcon, divBottomIconsNote)
+        })
+
+        // if parentDiv has a class of pinned append parentDiv to pinnedContainer.actualePinnedContainer
         if (parentDiv.classList.contains("pinned")) {
             pinnedContainer.classList.remove("none")
             actualePinnedContainer.appendChild(parentDiv)

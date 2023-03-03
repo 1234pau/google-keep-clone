@@ -14,7 +14,7 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.TopBar {
+.selectedItemsDrop {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -22,6 +22,95 @@ body {
     border-bottom: 1px solid var(--myBorderColor);
     height: 50px;
     padding: 10px;
+}
+
+.closeSelectedAndLength {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.closeSelectedAndLength .closeSelected {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 30px;
+    background-color: transparent;
+}
+
+.closeSelectedAndLength .closeSelected:hover {
+    background-color: var(--myHoverNavColor);
+}
+
+.closeSelectedAndLength .closeSelected svg {
+    width: 30px;
+    cursor: pointer;
+    color: var(--myBorderColor);
+}
+
+.closeSelectedAndLength h2 {
+    font-size: 22px;
+    color: var(--myBorderColor);
+    letter-spacing: 1px;
+}
+
+.iconsSelected {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 20%;
+}
+
+.iconsSelected div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 30px;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.iconsSelected div:hover {
+    background-color: var(--myHoverNavColor);
+}
+
+.iconsSelected div svg {
+    width: 25px;
+    color: rgb(116, 160, 226);
+    cursor: pointer;
+}
+
+.TopBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--myBackgroundColor);
+    border-bottom: 1px solid var(--myBorderColor);
+    width: 100%;
+    height: 70px;
+    padding: 10px;
+    position: fixed;
+    box-sizing: border-box;
+}
+
+.zIndex {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: 1;
+}
+
+.zIndexMinus {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: -1;
 }
 
 .containerLeft {

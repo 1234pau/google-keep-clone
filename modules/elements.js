@@ -29,6 +29,9 @@ const pinIconChecked = document.querySelector(".pinIconChecked")
 const pinIconContainer = document.querySelector(".pinIconContainer")
 const actualePinnedContainer = document.querySelector(".actualePinnedContainer")
 const pinnedContainer = document.querySelector(".pinnedContainer")
+const selectedItemsDrop = document.querySelector(".selectedItemsDrop")
+const TopBar = document.querySelector(".TopBar")
+const lengthOfItems = document.querySelector(".lengthOfItems")
 const iconNav = [...document.querySelectorAll(".iconNav")]
 
 export {
@@ -63,5 +66,8 @@ export {
     iconNav,
     pinIcon,
     pinIconChecked,
-    pinIconContainer
+    pinIconContainer,
+    selectedItemsDrop,
+    TopBar,
+    lengthOfItems
 }
