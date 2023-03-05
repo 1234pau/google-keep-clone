@@ -60,7 +60,6 @@ export class PinNote extends HTMLElement {
         }
     }
     connectedCallback() {
-        const parentDiv = document.querySelector(".parentDivNote")
         const checkPin = this.shadowRoot.querySelector(".pinIconChecked")
         const pinIcon = this.shadowRoot.querySelector(".pinIcon")
         this.shadowRoot.querySelector(".pinIcon").addEventListener("click", () => {

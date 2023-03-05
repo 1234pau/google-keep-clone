@@ -100,32 +100,34 @@ textNote.addEventListener("click", (e) => {
     })
     // handle closing and opening AddCard container
 document.addEventListener("click", (e) => {
-        const parentEl = e.target
-        if ((parentEl == AddCard ||
-                parentEl.parentNode.parentNode.parentNode.parentNode == AddCard ||
-                parentEl.parentNode.parentNode.parentNode == AddCard ||
-                parentEl.parentNode.parentNode == AddCard ||
-                parentEl.parentNode == AddCard) && (parentEl !== closeBtn)) {
-            return
-        }
-        titleAndPinIcon.style.display = "none"
-        iconsAction.style.display = "none"
+    const parentEl = e.target
+    if ((parentEl == AddCard ||
+            parentEl.parentNode.parentNode.parentNode.parentNode == AddCard ||
+            parentEl.parentNode.parentNode.parentNode == AddCard ||
+            parentEl.parentNode.parentNode == AddCard ||
+            parentEl.parentNode == AddCard) && (parentEl !== closeBtn)) {
+        return
+    }
+    titleAndPinIcon.style.display = "none"
+    iconsAction.style.display = "none"
 
-        // if there is nothing in the imputs do not create the card
-        if (textNoteImput.value !== "" || titleInput.value !== "") {
-            createCardNote()
-            pinIconContainer.classList.remove("pinnedIcon")
-            pinIcon.style.display = "block"
-            pinIconChecked.style.display = "none"
-        } else {
-            pinIcon.style.display = "block"
-            pinIconChecked.style.display = "none"
-            return
-        }
-        // clear the imputs
-        textNoteImput.value = ""
-        titleInput.value = ""
-    })
+    // if there is nothing in the imputs do not create the card
+    if (textNoteImput.value !== "" || titleInput.value !== "") {
+        createCardNote()
+        pinIconContainer.classList.remove("pinnedIcon")
+        pinIcon.style.display = "block"
+        pinIconChecked.style.display = "none"
+    } else {
+
+        pinIcon.style.display = "block"
+        pinIconChecked.style.display = "none"
+        return
+    }
+    // clear the imputs
+    textNoteImput.value = ""
+    titleInput.value = ""
+})
+textNoteImput.focus()
     // create card function
 let n = 1
 let lengthOfParent
@@ -153,9 +155,9 @@ const createCardNote = () => {
         textDiv.appendChild(noteValue)
         parentDiv.appendChild(textDiv)
 
-        const pinIcon = document.createElement("pin-note", PinNote)
-        pinIcon.style.visibility = "hidden"
-        parentDiv.appendChild(pinIcon)
+        const pinIconNote = document.createElement("pin-note", PinNote)
+        pinIconNote.style.visibility = "hidden"
+        parentDiv.appendChild(pinIconNote)
 
         const divBottomIconsNote = document.createElement("div")
         divBottomIconsNote.classList.add("divBottomIconsNote")
@@ -193,12 +195,12 @@ const createCardNote = () => {
         if (parentDiv) {
             parentDiv.addEventListener("mouseover", () => {
                 selectIcon.style.visibility = "visible"
-                pinIcon.style.visibility = "visible"
+                pinIconNote.style.visibility = "visible"
                 divBottomIconsNote.style.visibility = "visible"
             })
             parentDiv.addEventListener("mouseout", () => {
                 selectIcon.style.visibility = "hidden"
-                pinIcon.style.visibility = "hidden"
+                pinIconNote.style.visibility = "hidden"
                 divBottomIconsNote.style.visibility = "hidden"
             })
         } else {
@@ -206,7 +208,7 @@ const createCardNote = () => {
         }
 
         // pin the card 🟥
-        pinIcon.addEventListener("click", () => {
+        pinIconNote.addEventListener("click", () => {
                 // show the pinnedContainer
                 pinnedContainer.classList.remove("none")
                     // if card has a class pinned attach it to actualePinnedContainer
@@ -228,7 +230,7 @@ const createCardNote = () => {
         // handle selectIcon and function 🟥
         selectIcon.addEventListener("click", () => {
                 parentDivLength.push(parentDiv.id)
-                selectFuture(parentDivLength, parentDiv, TopBar, lengthOfItems, selectIcon, pinIcon, divBottomIconsNote)
+                selectFuture(parentDivLength, parentDiv, TopBar, lengthOfItems, selectIcon, pinIconNote, divBottomIconsNote)
             })
             // handle archiveIcon and function
         archiveIcon.addEventListener("click", () => {
@@ -238,6 +240,13 @@ const createCardNote = () => {
                     containerNotes.appendChild(parentDiv)
                     return
                 }
+                // if actualePinnedContainer has no children make it display none
+                if (actualePinnedContainer.children.length === 0) {
+                    pinnedContainer.classList.add("none")
+                }
+                if (parentDiv.classList.contains("archived") && parentDiv.classList.contains("pinned")) {
+                    parentDiv.classList.remove("pinned")
+                }
             })
             // handle deleteIcon and function 🟥
         deleteIcon.addEventListener("click", () => {
@@ -245,7 +254,14 @@ const createCardNote = () => {
                     containerDelete.appendChild(parentDiv)
                     divBottomIconsNoteContainer.style.display = "none"
                     divBottomIconsDelete.style.display = "flex"
-                    pinIcon.style.display = "none"
+                    pinIconNote.style.display = "none"
+                }
+                if (parentDiv.classList.contains("deleted") && parentDiv.classList.contains("pinned")) {
+                    parentDiv.classList.remove("pinned")
+                }
+                // if actualePinnedContainer has no children make it display none
+                if (actualePinnedContainer.children.length === 0) {
+                    pinnedContainer.classList.add("none")
                 }
             })
             // redirect parentDiv to containerNotes 🟥
@@ -255,7 +271,7 @@ const createCardNote = () => {
                     containerNotes.appendChild(parentDiv)
                     divBottomIconsNoteContainer.style.display = "flex"
                     divBottomIconsDelete.style.display = "none"
-                    pinIcon.style.display = "block"
+                    pinIconNote.style.display = "block"
                 }
             })
             // remove the parentDiv from the DOM 🟥
@@ -309,6 +325,7 @@ const handleSections = () => {
         })
     }
 }
+
 handleSections()
     // handle display for sections
 const handleDisplay = (curentEl) => {
