@@ -44,12 +44,12 @@ export class ArchiveNote extends HTMLElement {
         const archiveIcon = this.shadowRoot.querySelector(".archiveIcon")
         const unarchiveIcon = this.shadowRoot.querySelector(".unarchiveIcon")
         if (cond == true) {
-            this.parentElement.parentElement.classList.add("archived")
+            this.parentElement.parentElement.parentElement.classList.add("archived")
             archiveIcon.style.display = "none"
             unarchiveIcon.style.display = "block"
             cond = false
         } else {
-            this.parentElement.parentElement.classList.remove("archived")
+            this.parentElement.parentElement.parentElement.classList.remove("archived")
                 // this.parentElement.parentElement.classList.add("unarchived")
             archiveIcon.style.display = "block"
             unarchiveIcon.style.display = "none"

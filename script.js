@@ -44,6 +44,8 @@ import { ImageNote } from "./modules/imageEl.js"
 import { PinNote } from "./modules/pinEl.js"
 import { SelectNote, parentDivLength } from "./modules/selectEl.js"
 import { selectFuture } from "./modules/selectFuture.js"
+import { RestoreNote } from "./modules/restoreEl.js"
+import { DeleteForeverNote } from "./modules/deleteForeverEl.js"
 
 
 // make search bar styling in white when click
@@ -126,7 +128,7 @@ document.addEventListener("click", (e) => {
     })
     // create card function
 let n = 1
-
+let lengthOfParent
 const createCardNote = () => {
         const parentDiv = document.createElement("div")
         parentDiv.classList.add("parentDivNote")
@@ -159,22 +161,35 @@ const createCardNote = () => {
         divBottomIconsNote.classList.add("divBottomIconsNote")
         parentDiv.appendChild(divBottomIconsNote)
 
+        const divBottomIconsNoteContainer = document.createElement("div")
+        divBottomIconsNoteContainer.classList.add("divBottomIconsNoteContainer")
+        divBottomIconsNote.appendChild(divBottomIconsNoteContainer)
+
         const reminderBel = document.createElement("reminder-note", ReminderNote)
-        divBottomIconsNote.appendChild(reminderBel)
+        divBottomIconsNoteContainer.appendChild(reminderBel)
 
         const paleteIcon = document.createElement("palete-note", PaleteNote)
-        divBottomIconsNote.appendChild(paleteIcon)
+        divBottomIconsNoteContainer.appendChild(paleteIcon)
 
         const imageIcon = document.createElement("image-note", ImageNote)
-        divBottomIconsNote.appendChild(imageIcon)
+        divBottomIconsNoteContainer.appendChild(imageIcon)
 
         const archiveIcon = document.createElement("archive-note", ArchiveNote)
-        divBottomIconsNote.appendChild(archiveIcon)
+        divBottomIconsNoteContainer.appendChild(archiveIcon)
 
         const deleteIcon = document.createElement("delete-note", DeleteNote)
-        divBottomIconsNote.appendChild(deleteIcon)
+        divBottomIconsNoteContainer.appendChild(deleteIcon)
 
-        // handle hover effect on card
+        const divBottomIconsDelete = document.createElement("div")
+        divBottomIconsDelete.classList.add("divBottomIconsDelete")
+        divBottomIconsNote.appendChild(divBottomIconsDelete)
+
+        const restore = document.createElement("restore-note", RestoreNote)
+        divBottomIconsDelete.appendChild(restore)
+
+        const deleteForever = document.createElement("deleteforever-note", DeleteForeverNote)
+        divBottomIconsDelete.appendChild(deleteForever)
+            // handle hover effect on card
         if (parentDiv) {
             parentDiv.addEventListener("mouseover", () => {
                 selectIcon.style.visibility = "visible"
@@ -223,13 +238,29 @@ const createCardNote = () => {
                     containerNotes.appendChild(parentDiv)
                     return
                 }
-
             })
-            // handle deleteIcon and function
+            // handle deleteIcon and function 🟥
         deleteIcon.addEventListener("click", () => {
-            if (parentDiv.classList.contains("deleted")) {
-                containerDelete.appendChild(parentDiv)
-            }
+                if (parentDiv.classList.contains("deleted")) {
+                    containerDelete.appendChild(parentDiv)
+                    divBottomIconsNoteContainer.style.display = "none"
+                    divBottomIconsDelete.style.display = "flex"
+                    pinIcon.style.display = "none"
+                }
+            })
+            // redirect parentDiv to containerNotes 🟥
+        restore.addEventListener("click", () => {
+                if (parentDiv.classList.contains("deleted")) {
+                    parentDiv.classList.remove("deleted")
+                    containerNotes.appendChild(parentDiv)
+                    divBottomIconsNoteContainer.style.display = "flex"
+                    divBottomIconsDelete.style.display = "none"
+                    pinIcon.style.display = "block"
+                }
+            })
+            // remove the parentDiv from the DOM 🟥
+        deleteForever.addEventListener("click", () => {
+            parentDiv.remove()
         })
 
         // if parentDiv has a class of pinned append parentDiv to pinnedContainer.actualePinnedContainer
@@ -265,6 +296,7 @@ const handleSections = () => {
                 if (containerArchive) {
                     AddCard.style.display = "none" // make AddCard disapear when click archive button in left bat
                     handleDisplay(containerArchive)
+
                 }
             } else if (icon.classList.contains("delete")) {
                 if (containerDelete) {
@@ -342,10 +374,11 @@ pinIconChecked.addEventListener("click", () => {
 //         containerArchive.innerHTML = style
 
 //     } else {
-//         const whenContanerEmpty = document.querySelector(".whenContanerEmpty")
-//         whenContanerEmpty.style.display = "none"
-
-//         // return
+//         // const whenContanerEmpty = document.querySelector(".whenContanerEmpty")
+//         // whenContanerEmpty.style.display = "none"
+//         style = ""
+//             // return
 //     }
 // }
+
 // whenContainerEmpty()

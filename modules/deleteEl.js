@@ -36,7 +36,7 @@ export class DeleteNote extends HTMLElement {
     }
     connectedCallback() {
         this.shadowRoot.addEventListener("click", () => {
-            this.parentElement.parentElement.classList.add("deleted")
+            this.parentElement.parentElement.parentElement.classList.add("deleted")
         })
 
     }
