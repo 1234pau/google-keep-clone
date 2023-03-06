@@ -12,6 +12,8 @@ template.innerHTML = `
   cursor: pointer;
   margin-top: -70px;
   float:right;
+  position:relative;
+  z-index: 999;
   
 }
 .containerPinIcon:hover{
