@@ -10,6 +10,8 @@ template.innerHTML = `
   cursor: pointer;
   margin-top: -25px;
   margin-left: -20px;
+  position:relative;
+  z-index: 99;
   
 }
 

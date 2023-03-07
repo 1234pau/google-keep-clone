@@ -10,7 +10,7 @@ template.innerHTML = `
   border-radius: 50px;
   background-color: transparent;
   cursor: pointer;
-  margin-top: -70px;
+  margin-top: -20px;
   float:right;
   position:relative;
   z-index: 999;
