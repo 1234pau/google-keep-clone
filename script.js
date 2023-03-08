@@ -133,13 +133,28 @@ textNoteImput.focus()
 let n = 1
 let lengthOfParent
 const createCardNote = () => {
-    const parentDiv = document.createElement("div")
+    const parentDiv = document.createElement("div") // create the parent div
     parentDiv.classList.add("parentDivNote")
     parentDiv.id = n++;
 
-    const selectIcon = document.createElement("select-note", SelectNote)
+    const selectIcon = document.createElement("select-note", SelectNote) // create select icon (web component)
     selectIcon.style.visibility = "hidden"
     parentDiv.appendChild(selectIcon)
+
+    const containerImage = document.createElement("div") // create image div (this is display none until you select a file)
+    containerImage.classList.add("containerImage")
+    const divDelete = document.createElement("div") // div for trash icon
+    divDelete.classList.add("divDelete")
+    divDelete.innerHTML = ` 
+      <svg class="deleteImage" viewBox="0 0 24 24"><path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v10zM9 9h6c.55 0 1 .45 1 1v8c0 .55-.45 1-1 1H9c-.55 0-1-.45-1-1v-8c0-.55.45-1 1-1zm6.5-5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1h-2.5z"/></svg>
+    `
+    const image = document.createElement("img") // image tag
+    image.classList.add("imageForCardNote")
+    image.height = 70
+    image.src = ""
+    containerImage.appendChild(image)
+    containerImage.appendChild(divDelete)
+    parentDiv.appendChild(containerImage)
 
 
     const titleValue = document.createElement("h2")

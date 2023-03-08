@@ -729,6 +729,7 @@ body {
     margin-top: -10px;
     /* border: 1px solid red; */
     margin-bottom: 20px;
+    display: none;
 }
 
 .divDelete {

@@ -41,40 +41,30 @@ export class ImageNote extends HTMLElement {
         this.shadowRoot.appendChild(template.content.cloneNode(true))
     }
     connectedCallback() {
-        const containerImage = document.querySelector(".containerImage")
         const file = this.shadowRoot.querySelector("#file-input")
+        const containerImage = document.querySelector(".containerImage")
+        const divDelete = document.querySelector(".divDelete")
+        const image = document.querySelector(".imageForCardNote")
+            // handle file select button
         file.addEventListener("change", () => {
             console.log("file added")
-            const containerImage = document.createElement("div")
-            containerImage.classList.add("containerImage")
-            const divDelete = document.createElement("div")
-            divDelete.classList.add("divDelete")
-            divDelete.innerHTML = `
-              <svg class="deleteImage" viewBox="0 0 24 24"><path fill="currentColor" d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v10zM9 9h6c.55 0 1 .45 1 1v8c0 .55-.45 1-1 1H9c-.55 0-1-.45-1-1v-8c0-.55.45-1 1-1zm6.5-5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1h-2.5z"/></svg>
-            `
-            containerImage.appendChild(divDelete)
-            this.parentElement.parentElement.parentElement.appendChild(containerImage)
-            this.parentElement.parentElement.parentElement.insertBefore(containerImage, this.parentElement.parentElement.parentElement.children[1])
-            if (file.files.length) {
-                // containerImage.innerHTML = ""
 
-                for (let i = 0; i < file.files.length; i++) {
-                    const image = document.createElement("img")
-                    image.classList.add("imageForCardNote")
-                        // image.width = '220px'
-                    image.height = 70
-                    image.src = URL.createObjectURL(file.files[i]);
-
-                    image.onload = () => {
-                        URL.revokeObjectURL(this.src);
-                    }
-                    containerImage.appendChild(image)
+            containerImage.style.display = "block"
+            image.src = ""
+                // loop through each file
+            for (let i = 0; i < file.files.length; i++) {
+                // create an url for the selected file
+                image.src = URL.createObjectURL(file.files[i]);
+                // let the browser know not to keep the reference to the file any longer
+                image.onload = () => {
+                    URL.revokeObjectURL(image.src);
                 }
-            } else {
-                return
             }
+            // delete image when click the trash button
             divDelete.addEventListener("click", () => {
-                containerImage.remove()
+                containerImage.style.display = "none"
+                image.src = "" // clear the image source
+                file.value = "" // clear the value of file in order to select the same file one each other
                 console.log("file removed")
             })
         }, false)
