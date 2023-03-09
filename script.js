@@ -209,6 +209,23 @@ const createCardNote = () => {
     const deleteForever = document.createElement("deleteforever-note", DeleteForeverNote)
     divBottomIconsDelete.appendChild(deleteForever)
 
+    // make palete color div
+    const containerPaleteColor = document.createElement("div")
+    containerPaleteColor.classList.add("containerPaleteColor")
+    containerPaleteColor.classList.add("noneColor") // make it display none
+    const colors = ['red', 'blue', 'green', 'yellow', 'purple'] // colors for divs
+    for (let i = 0; i < 5, i < colors.length; i++) { // loop the colors
+        const colorDiv = document.createElement("div"); // create the color cercle
+        colorDiv.setAttribute("data-color", colors[i]) // set a date attribute and set the value of it
+        colorDiv.style.backgroundColor = colorDiv.dataset.color // set the background color of cercle color
+        containerPaleteColor.appendChild(colorDiv)
+        colorDiv.addEventListener("click", (e) => { // set border color of parentDiv when you click a cercle(color)
+            parentDiv.style.borderColor = e.target.dataset.color
+
+        })
+    }
+    parentDiv.appendChild(containerPaleteColor)
+
     // handle hover effect on card
     if (parentDiv) {
         parentDiv.addEventListener("mouseover", () => {
@@ -296,28 +313,10 @@ const createCardNote = () => {
     deleteForever.addEventListener("click", () => {
             parentDiv.remove()
         })
-        // 
-        // imageIcon.addEventListener("change", () => {
-        //     console.log("ssssss")
-        //     if (this.files.length) {
-        //         containerImage.innerHTML = ""
-
-    //         for (let i = 0; i < this.files.length; i++) {
-    //             const image = document.createElement("img")
-    //                 // image.classList.add("imageForCardNote")
-    //                 // image.width = '220px'
-    //             image.height = 100
-    //             image.src = URL.createObjectURL(this.files[i]);
-
-    //             image.onload = () => {
-    //                 URL.revokeObjectURL(image.src);
-    //             }
-    //             containerImage.appendChild(image)
-    //         }
-    //     } else {
-    //         return
-    //     }
-    // }, false)
+        // toggle palete color 🟥
+    paleteIcon.addEventListener("click", () => {
+        containerPaleteColor.classList.toggle("noneColor")
+    })
 
     // if parentDiv has a class of pinned append parentDiv to pinnedContainer.actualePinnedContainer
     if (parentDiv.classList.contains("pinned")) {

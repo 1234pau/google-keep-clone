@@ -35,9 +35,14 @@ template.innerHTML = `
 
 export class PaleteNote extends HTMLElement {
     constructor() {
-        super()
-        this.attachShadow({ mode: "open" })
-        this.shadowRoot.appendChild(template.content.cloneNode(true))
-    }
+            super()
+            this.attachShadow({ mode: "open" })
+            this.shadowRoot.appendChild(template.content.cloneNode(true))
+        }
+        // connectedCallback() {
+        //     this.shadowRoot.addEventListener("click", () => {
+        //         console.log("palete pressed")
+        //     })
+        // }
 }
 customElements.define("palete-note", PaleteNote)

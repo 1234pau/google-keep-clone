@@ -14,6 +14,11 @@ template.innerHTML = `
 .containerImageIcon:hover{
   background-color: var(--myHoverNavColor);
 }
+label{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
   .imageIcon{
     color: var(--myBorderColor);
     width: 20px;
