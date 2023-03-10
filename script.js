@@ -34,7 +34,9 @@ import {
     actualePinnedContainer,
     selectedItemsDrop,
     TopBar,
-    lengthOfItems
+    lengthOfItems,
+    imageIc,
+    file
 } from "./modules/elements.js"
 import { ReminderNote } from "./modules/reminderEl.js"
 import { PaleteNote } from "./modules/paleteEl.js"
@@ -155,6 +157,18 @@ const createCardNote = () => {
     containerImage.appendChild(image)
     containerImage.appendChild(divDelete)
     parentDiv.appendChild(containerImage)
+    console.log(getSrcImage())
+    console.log(image.src)
+    if (getSrcImage() === undefined) {
+        image.src = ""
+    } else {
+        containerImage.style.display = "block"
+        image.src = getSrcImage()
+        image.onload = () => {
+            URL.revokeObjectURL(getSrcImage());
+        }
+        file.value = ''
+    }
 
 
     const titleValue = document.createElement("h2")
@@ -315,7 +329,14 @@ const createCardNote = () => {
         })
         // toggle palete color 🟥
     paleteIcon.addEventListener("click", () => {
-        containerPaleteColor.classList.toggle("noneColor")
+            containerPaleteColor.classList.toggle("noneColor")
+        })
+        // delete image when click the trash button
+    divDelete.addEventListener("click", () => {
+        containerImage.style.display = "none"
+        image.src = "" // clear the image source
+        file.value = "" // clear the value of file in order to select the same file one each other
+        console.log("file removed")
     })
 
     // if parentDiv has a class of pinned append parentDiv to pinnedContainer.actualePinnedContainer
@@ -381,25 +402,14 @@ pinIcon.addEventListener("click", () => {
     change(true)
 })
 pinIconChecked.addEventListener("click", () => {
-    change(false)
-})
-
-// const whenContainerEmpty = () => {
-//     let style = `
-//         <div class = "whenContanerEmpty">
-//             <svg viewBox="0 0 24 24"><path fill="currentColor" d="M5 21q-.825 0-1.413-.588T3 19V6.5q0-.375.125-.675t.325-.575l1.4-1.7q.2-.275.5-.413T6 3h12q.35 0 .65.137t.5.413l1.4 1.7q.2.275.325.575T21 6.5V19q0 .825-.588 1.413T19 21H5Zm.4-15h13.2l-.85-1H6.25L5.4 6ZM5 19h14V8H5v11Zm7-1.425q.2 0 .375-.063t.325-.212l2.6-2.6q.275-.275.275-.7t-.275-.7q-.275-.275-.7-.275t-.7.275l-.9.9V11q0-.425-.288-.713T12 10q-.425 0-.713.288T11 11v3.2l-.9-.9q-.275-.275-.7-.275t-.7.275q-.275.275-.275.7t.275.7l2.6 2.6q.15.15.325.212t.375.063ZM5 19V8v11Z"/></svg>
-//             <h1>Your archived notes appear here</h1>
-//         </div>
-//         `
-//     if (containerArchive.children.length === 0) {
-//         containerArchive.innerHTML = style
-
-//     } else {
-//         // const whenContanerEmpty = document.querySelector(".whenContanerEmpty")
-//         // whenContanerEmpty.style.display = "none"
-//         style = ""
-//             // return
-//     }
-// }
-
-// whenContainerEmpty()
+        change(false)
+    })
+    // get the url image
+const getSrcImage = () => {
+    for (let i = 0; i < file.files.length; i++) {
+        const srcImage = URL.createObjectURL(file.files[i]);
+        console.log(srcImage)
+        return srcImage
+    }
+}
+file.addEventListener("change", getSrcImage, false)

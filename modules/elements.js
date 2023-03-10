@@ -32,6 +32,8 @@ const pinnedContainer = document.querySelector(".pinnedContainer")
 const selectedItemsDrop = document.querySelector(".selectedItemsDrop")
 const TopBar = document.querySelector(".TopBar")
 const lengthOfItems = document.querySelector(".lengthOfItems")
+const imageIc = document.querySelector(".imageIc")
+const file = document.querySelector("#file-input")
 const iconNav = [...document.querySelectorAll(".iconNav")]
 
 export {
@@ -69,5 +71,7 @@ export {
     pinIconContainer,
     selectedItemsDrop,
     TopBar,
-    lengthOfItems
+    lengthOfItems,
+    imageIc,
+    file
 }

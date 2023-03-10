@@ -482,6 +482,10 @@ body {
     background-color: var(--myHoverNavColor);
 }
 
+.imageIc input {
+    display: none;
+}
+
 
 /* add display none */
 

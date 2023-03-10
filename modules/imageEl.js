@@ -47,31 +47,21 @@ export class ImageNote extends HTMLElement {
     }
     connectedCallback() {
         const file = this.shadowRoot.querySelector("#file-input")
-        const containerImage = document.querySelector(".containerImage")
-        const divDelete = document.querySelector(".divDelete")
-        const image = document.querySelector(".imageForCardNote")
             // handle file select button
         file.addEventListener("change", () => {
             console.log("file added")
-
-            containerImage.style.display = "block"
-            image.src = ""
+            const contIm = this.parentElement.parentElement.parentElement.children[1] // containerImage
+            contIm.style.display = "block"
+            contIm.children[0].src = "" // containerImage.image
                 // loop through each file
             for (let i = 0; i < file.files.length; i++) {
                 // create an url for the selected file
-                image.src = URL.createObjectURL(file.files[i]);
+                contIm.children[0].src = URL.createObjectURL(file.files[i]);
                 // let the browser know not to keep the reference to the file any longer
-                image.onload = () => {
-                    URL.revokeObjectURL(image.src);
+                contIm.children[0].onload = () => {
+                    URL.revokeObjectURL(contIm.children[0].src);
                 }
             }
-            // delete image when click the trash button
-            divDelete.addEventListener("click", () => {
-                containerImage.style.display = "none"
-                image.src = "" // clear the image source
-                file.value = "" // clear the value of file in order to select the same file one each other
-                console.log("file removed")
-            })
         }, false)
     }
 }
