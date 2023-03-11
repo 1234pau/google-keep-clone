@@ -43,4 +43,4 @@ export class SelectNote extends HTMLElement {
 }
 customElements.define("select-note", SelectNote)
 
-export const parentDivLength = []
+export let parentDivLength = []

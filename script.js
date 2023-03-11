@@ -36,7 +36,8 @@ import {
     TopBar,
     lengthOfItems,
     imageIc,
-    file
+    file,
+    iconsSelected
 } from "./modules/elements.js"
 import { ReminderNote } from "./modules/reminderEl.js"
 import { PaleteNote } from "./modules/paleteEl.js"
@@ -157,8 +158,6 @@ const createCardNote = () => {
     containerImage.appendChild(image)
     containerImage.appendChild(divDelete)
     parentDiv.appendChild(containerImage)
-    console.log(getSrcImage())
-    console.log(image.src)
     if (getSrcImage() === undefined) {
         image.src = ""
     } else {
@@ -338,19 +337,28 @@ const createCardNote = () => {
         file.value = "" // clear the value of file in order to select the same file one each other
         console.log("file removed")
     })
-
-    // if parentDiv has a class of pinned append parentDiv to pinnedContainer.actualePinnedContainer
-    if (parentDiv.classList.contains("pinned")) {
-        pinnedContainer.classList.remove("none")
-        actualePinnedContainer.appendChild(parentDiv)
-        return actualePinnedContainer.appendChild(parentDiv)
-    } else { // if not append to containerNotes
-        return containerNotes.appendChild(parentDiv)
-    }
+    handleSelected(parentDiv, selectIcon, divBottomIconsNote)
+        // if parentDiv has a class of pinned append parentDiv to pinnedContainer.actualePinnedContainer
+        // if (parentDiv.classList.contains("pinned")) {
+        //     pinnedContainer.classList.remove("none")
+        //     actualePinnedContainer.appendChild(parentDiv)
+        //     return actualePinnedContainer.appendChild(parentDiv)
+        // } else { // if not append to containerNotes
+        //     return containerNotes.appendChild(parentDiv)
+        // }
+    apendProperly(parentDiv, pinnedContainer, actualePinnedContainer, containerNotes)
 
 }
-
-// handle display for sections
+const apendProperly = (parentDiv, pinnedContainer, actualePinnedContainer, containerNotes) => {
+        if (parentDiv.classList.contains("pinned")) {
+            pinnedContainer.classList.remove("none")
+            actualePinnedContainer.appendChild(parentDiv)
+            return actualePinnedContainer.appendChild(parentDiv)
+        } else { // if not append to containerNotes
+            return containerNotes.appendChild(parentDiv)
+        }
+    }
+    // handle display for sections
 handleSections(iconNav, containerNotes, containerReminder, containerLabel, containerArchive, containerDelete, AddCard)
 
 export const handleDisplay = (curentEl) => {
@@ -408,8 +416,46 @@ pinIconChecked.addEventListener("click", () => {
 const getSrcImage = () => {
     for (let i = 0; i < file.files.length; i++) {
         const srcImage = URL.createObjectURL(file.files[i]);
-        console.log(srcImage)
         return srcImage
     }
 }
 file.addEventListener("change", getSrcImage, false)
+
+const handleSelected = (parentDiv, selectIcon, divBottomIconsNote) => {
+    for (let i = 0; i < iconsSelected.length; i++) {
+        iconsSelected[i].addEventListener("click", () => {
+            // if (parentDiv.classList.contains("selected")) {
+            if (parentDiv.classList.contains("selected") && iconsSelected[i].className === "pinIcon") {
+                parentDiv.classList.remove("selected")
+                parentDiv.classList.add("pinned")
+                apendProperly(parentDiv, pinnedContainer, actualePinnedContainer, containerNotes)
+                TopBar.classList.remove("zIndexMinus")
+                    // parentDiv.style.border = "1px solid rgb(180, 180, 180)"
+
+                // parentDiv.addEventListener("mouseover", () => {
+                //     selectIcon.style.visibility = "visible"
+                //     pinIcon.style.visibility = "visible"
+                //     divBottomIconsNote.style.visibility = "visible"
+                // })
+                // parentDiv.addEventListener("mouseout", () => {
+                //         selectIcon.style.visibility = "hidden"
+                //         pinIcon.style.visibility = "hidden"
+                //         divBottomIconsNote.style.visibility = "hidden"
+                //     })
+                console.log("pin icon")
+            } else if (iconsSelected[i].className === "reminderBell") {
+                console.log("reminder bell")
+            } else if (iconsSelected[i].className === "paleteIcon") {
+                console.log("palete icon")
+            } else if (iconsSelected[i].className === "archiveIcon") {
+                console.log("archive icon")
+            } else if (iconsSelected[i].className === "deleteIcon") {
+                console.log("delete icon")
+            } else {
+                return
+            }
+            // }
+
+        })
+    }
+}

@@ -1,5 +1,4 @@
 export const selectFuture = (parentDivLength, parentDiv, TopBar, lengthOfItems, selectIcon, pinIcon, divBottomIconsNote) => {
-
     const seen = new Map()
 
     for (let i = 0; i < parentDivLength.length; i++) {
