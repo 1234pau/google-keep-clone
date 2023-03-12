@@ -44,4 +44,5 @@ export const selectFuture = (parentDivLength, parentDiv, TopBar, lengthOfItems, 
         })
         return
     }
+    return seen
 }

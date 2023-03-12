@@ -278,7 +278,7 @@ const createCardNote = () => {
     // handle selectIcon and function 🟥
     selectIcon.addEventListener("click", () => {
             parentDivLength.push(parentDiv.id)
-            selectFuture(parentDivLength, parentDiv, TopBar, lengthOfItems, selectIcon, pinIconNote, divBottomIconsNote)
+            selectFuture(parentDivLength, parentDiv, TopBar, lengthOfItems, selectIcon, pinIcon, divBottomIconsNote)
         })
         // handle archiveIcon and function
     archiveIcon.addEventListener("click", () => {
@@ -337,7 +337,7 @@ const createCardNote = () => {
         file.value = "" // clear the value of file in order to select the same file one each other
         console.log("file removed")
     })
-    handleSelected(parentDiv, selectIcon, divBottomIconsNote)
+    handleSelected(parentDiv, selectIcon, divBottomIconsNote, pinIcon)
         // if parentDiv has a class of pinned append parentDiv to pinnedContainer.actualePinnedContainer
         // if (parentDiv.classList.contains("pinned")) {
         //     pinnedContainer.classList.remove("none")
@@ -420,41 +420,48 @@ const getSrcImage = () => {
     }
 }
 file.addEventListener("change", getSrcImage, false)
-
-const handleSelected = (parentDiv, selectIcon, divBottomIconsNote) => {
-    for (let i = 0; i < iconsSelected.length; i++) {
+    // add handleres on each icon in top bar
+const handleSelected = (parentDiv, selectIcon, divBottomIconsNote, pinIcon) => {
+    for (let i = 0; i < iconsSelected.length; i++) { // loop through each icon
         iconsSelected[i].addEventListener("click", () => {
-            // if (parentDiv.classList.contains("selected")) {
-            if (parentDiv.classList.contains("selected") && iconsSelected[i].className === "pinIcon") {
-                parentDiv.classList.remove("selected")
-                parentDiv.classList.add("pinned")
-                apendProperly(parentDiv, pinnedContainer, actualePinnedContainer, containerNotes)
-                TopBar.classList.remove("zIndexMinus")
-                    // parentDiv.style.border = "1px solid rgb(180, 180, 180)"
-
-                // parentDiv.addEventListener("mouseover", () => {
-                //     selectIcon.style.visibility = "visible"
-                //     pinIcon.style.visibility = "visible"
-                //     divBottomIconsNote.style.visibility = "visible"
-                // })
-                // parentDiv.addEventListener("mouseout", () => {
-                //         selectIcon.style.visibility = "hidden"
-                //         pinIcon.style.visibility = "hidden"
-                //         divBottomIconsNote.style.visibility = "hidden"
-                //     })
-                console.log("pin icon")
-            } else if (iconsSelected[i].className === "reminderBell") {
-                console.log("reminder bell")
-            } else if (iconsSelected[i].className === "paleteIcon") {
-                console.log("palete icon")
-            } else if (iconsSelected[i].className === "archiveIcon") {
-                console.log("archive icon")
-            } else if (iconsSelected[i].className === "deleteIcon") {
-                console.log("delete icon")
-            } else {
-                return
+            // if the icon is pin icon and parent div has a class of selected
+            if (parentDiv.classList.contains("selected")) {
+                if (iconsSelected[i].className === "pinIcon") {
+                    // remove selected and add pinned
+                    parentDiv.classList.remove("selected")
+                    parentDiv.classList.add("pinned")
+                        // apend parent div to actualePinnedContainer
+                    apendProperly(parentDiv, pinnedContainer, actualePinnedContainer, containerNotes)
+                        // show top bar
+                    TopBar.classList.remove("zIndexMinus")
+                    parentDiv.style.border = "1px solid var(--myBorderColor)"
+                    selectIcon.style.visibility = "hidden"
+                        // remove the content of parentDivLength in order to work properly when i select again
+                    parentDivLength.splice(0, parentDivLength.length)
+                        // handle mouseover and mouseout on parentDiv
+                    parentDiv.addEventListener("mouseover", () => {
+                        selectIcon.style.visibility = "visible"
+                        pinIcon.style.visibility = "visible"
+                        divBottomIconsNote.style.visibility = "visible"
+                    })
+                    parentDiv.addEventListener("mouseout", () => {
+                        selectIcon.style.visibility = "hidden"
+                        pinIcon.style.visibility = "hidden"
+                        divBottomIconsNote.style.visibility = "hidden"
+                    })
+                    console.log("pin icon")
+                } else if (iconsSelected[i].className === "reminderBell") {
+                    console.log("reminder bell")
+                } else if (iconsSelected[i].className === "paleteIcon") {
+                    console.log("palete icon")
+                } else if (iconsSelected[i].className === "archiveIcon") {
+                    console.log("archive icon")
+                } else if (iconsSelected[i].className === "deleteIcon") {
+                    console.log("delete icon")
+                } else {
+                    return
+                }
             }
-            // }
 
         })
     }
