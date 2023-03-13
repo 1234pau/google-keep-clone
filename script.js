@@ -337,15 +337,8 @@ const createCardNote = () => {
         file.value = "" // clear the value of file in order to select the same file one each other
         console.log("file removed")
     })
-    handleSelected(parentDiv, selectIcon, divBottomIconsNote, pinIcon)
-        // if parentDiv has a class of pinned append parentDiv to pinnedContainer.actualePinnedContainer
-        // if (parentDiv.classList.contains("pinned")) {
-        //     pinnedContainer.classList.remove("none")
-        //     actualePinnedContainer.appendChild(parentDiv)
-        //     return actualePinnedContainer.appendChild(parentDiv)
-        // } else { // if not append to containerNotes
-        //     return containerNotes.appendChild(parentDiv)
-        // }
+    handleSelected(parentDiv, selectIcon, divBottomIconsNote, pinIcon, divBottomIconsNoteContainer, divBottomIconsDelete, pinIconNote, containerDelete)
+
     apendProperly(parentDiv, pinnedContainer, actualePinnedContainer, containerNotes)
 
 }
@@ -421,7 +414,7 @@ const getSrcImage = () => {
 }
 file.addEventListener("change", getSrcImage, false)
     // add handleres on each icon in top bar
-const handleSelected = (parentDiv, selectIcon, divBottomIconsNote, pinIcon) => {
+const handleSelected = (parentDiv, selectIcon, divBottomIconsNote, pinIcon, divBottomIconsNoteContainer, divBottomIconsDelete, pinIconNote, containerDelete) => {
     for (let i = 0; i < iconsSelected.length; i++) { // loop through each icon
         iconsSelected[i].addEventListener("click", () => {
             // if the icon is pin icon and parent div has a class of selected
@@ -455,8 +448,52 @@ const handleSelected = (parentDiv, selectIcon, divBottomIconsNote, pinIcon) => {
                 } else if (iconsSelected[i].className === "paleteIcon") {
                     console.log("palete icon")
                 } else if (iconsSelected[i].className === "archiveIcon") {
+                    parentDiv.classList.add("archived")
+                    parentDiv.classList.remove("selected")
+                    TopBar.classList.remove("zIndexMinus")
+                    parentDiv.style.border = "1px solid var(--myBorderColor)"
+                    selectIcon.style.visibility = "hidden"
+                    parentDivLength.splice(0, parentDivLength.length)
+                    parentDiv.addEventListener("mouseover", () => {
+                        selectIcon.style.visibility = "visible"
+                        pinIcon.style.visibility = "visible"
+                        divBottomIconsNote.style.visibility = "visible"
+                    })
+                    parentDiv.addEventListener("mouseout", () => {
+                        selectIcon.style.visibility = "hidden"
+                        pinIcon.style.visibility = "hidden"
+                        divBottomIconsNote.style.visibility = "hidden"
+                    })
+                    if (parentDiv.classList.contains("archived")) {
+                        containerArchive.appendChild(parentDiv)
+                    } else {
+                        containerNotes.appendChild(parentDiv)
+                        return
+                    }
                     console.log("archive icon")
                 } else if (iconsSelected[i].className === "deleteIcon") {
+                    parentDiv.classList.add("deleted")
+                    parentDiv.classList.remove("selected")
+                    TopBar.classList.remove("zIndexMinus")
+                    parentDiv.style.border = "1px solid var(--myBorderColor)"
+                    selectIcon.style.visibility = "hidden"
+                    parentDivLength.splice(0, parentDivLength.length)
+                    if (parentDiv.classList.contains("deleted")) {
+                        containerDelete.appendChild(parentDiv)
+                        divBottomIconsNoteContainer.style.display = "none"
+                        divBottomIconsDelete.style.display = "flex"
+                        pinIconNote.style.display = "none"
+                        parentDiv.addEventListener("mouseover", () => {
+                            selectIcon.style.visibility = "visible"
+                            pinIcon.style.visibility = "visible"
+                            divBottomIconsNote.style.visibility = "visible"
+                        })
+                        parentDiv.addEventListener("mouseout", () => {
+                            selectIcon.style.visibility = "hidden"
+                            pinIcon.style.visibility = "hidden"
+                            divBottomIconsNote.style.visibility = "hidden"
+                        })
+                    }
                     console.log("delete icon")
                 } else {
                     return

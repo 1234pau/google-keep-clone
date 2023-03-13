@@ -38,6 +38,7 @@ export class ArchiveNote extends HTMLElement {
         super()
         this.attachShadow({ mode: "open" })
         this.shadowRoot.appendChild(template.content.cloneNode(true))
+
     }
 
     switchTheIcon(cond) {
@@ -54,8 +55,15 @@ export class ArchiveNote extends HTMLElement {
             archiveIcon.style.display = "block"
             unarchiveIcon.style.display = "none"
         }
+
+
     }
     connectedCallback() {
+        if (this.parentElement.parentElement.parentElement.classList.contains("archived")) {
+            this.switchTheIcon(true)
+        } else {
+            this.switchTheIcon(false)
+        }
         this.shadowRoot.querySelector(".archiveIcon").addEventListener("click", () => {
             this.switchTheIcon(true)
         })
