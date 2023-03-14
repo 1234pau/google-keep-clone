@@ -34,6 +34,7 @@ const TopBar = document.querySelector(".TopBar")
 const lengthOfItems = document.querySelector(".lengthOfItems")
 const imageIc = document.querySelector(".imageIc")
 const file = document.querySelector("#file-input")
+const containerPaleteColorTop = document.querySelector(".containerPaleteColorTop")
 const iconsSelected = [...document.querySelectorAll(".iconsSelected div")]
 const iconNav = [...document.querySelectorAll(".iconNav")]
 
@@ -75,5 +76,6 @@ export {
     lengthOfItems,
     imageIc,
     file,
-    iconsSelected
+    iconsSelected,
+    containerPaleteColorTop
 }

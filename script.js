@@ -37,7 +37,8 @@ import {
     lengthOfItems,
     imageIc,
     file,
-    iconsSelected
+    iconsSelected,
+    containerPaleteColorTop
 } from "./modules/elements.js"
 import { ReminderNote } from "./modules/reminderEl.js"
 import { PaleteNote } from "./modules/paleteEl.js"
@@ -279,6 +280,62 @@ const createCardNote = () => {
     selectIcon.addEventListener("click", () => {
             parentDivLength.push(parentDiv.id)
             selectFuture(parentDivLength, parentDiv, TopBar, lengthOfItems, selectIcon, pinIcon, divBottomIconsNote)
+            if (parentDiv.classList.contains("archived") && parentDiv.classList.contains("selected")) {
+                iconsSelected[3].children[1].style.display = "block"
+                iconsSelected[3].children[1].addEventListener("click", () => {
+                    console.log("dddddddddddddddddd")
+                    parentDiv.classList.remove("selected")
+                    parentDiv.classList.remove("archived")
+                    containerNotes.appendChild(parentDiv)
+                    iconsSelected[3].children[1].style.display = "none"
+                    iconsSelected[3].children[0].style.display = "block"
+                    TopBar.classList.remove("zIndexMinus")
+                    parentDiv.style.border = "1px solid var(--myBorderColor)"
+                    selectIcon.style.visibility = "hidden"
+                        // remove the content of parentDivLength in order to work properly when i select again
+                    parentDivLength.splice(0, parentDivLength.length)
+                        // handle mouseover and mouseout on parentDiv
+                    parentDiv.addEventListener("mouseover", () => {
+                        selectIcon.style.visibility = "visible"
+                        pinIcon.style.visibility = "visible"
+                        divBottomIconsNote.style.visibility = "visible"
+                    })
+                    parentDiv.addEventListener("mouseout", () => {
+                        selectIcon.style.visibility = "hidden"
+                        pinIcon.style.visibility = "hidden"
+                        divBottomIconsNote.style.visibility = "hidden"
+                    })
+                })
+                iconsSelected[3].children[0].style.display = "none"
+
+            } else if (parentDiv.classList.contains("pinned") && parentDiv.classList.contains("selected")) {
+                iconsSelected[0].children[1].style.display = "block"
+                iconsSelected[0].children[1].addEventListener("click", () => {
+
+                    parentDiv.classList.remove("selected")
+                    parentDiv.classList.remove("pinned")
+                    containerNotes.appendChild(parentDiv)
+                    iconsSelected[0].children[1].style.display = "none"
+                    iconsSelected[0].children[0].style.display = "block"
+                    TopBar.classList.remove("zIndexMinus")
+                    parentDiv.style.border = "1px solid var(--myBorderColor)"
+                    selectIcon.style.visibility = "hidden"
+                        // remove the content of parentDivLength in order to work properly when i select again
+                    parentDivLength.splice(0, parentDivLength.length)
+                        // handle mouseover and mouseout on parentDiv
+                    parentDiv.addEventListener("mouseover", () => {
+                        selectIcon.style.visibility = "visible"
+                        pinIcon.style.visibility = "visible"
+                        divBottomIconsNote.style.visibility = "visible"
+                    })
+                    parentDiv.addEventListener("mouseout", () => {
+                        selectIcon.style.visibility = "hidden"
+                        pinIcon.style.visibility = "hidden"
+                        divBottomIconsNote.style.visibility = "hidden"
+                    })
+                })
+                iconsSelected[0].children[0].style.display = "none"
+            }
         })
         // handle archiveIcon and function
     archiveIcon.addEventListener("click", () => {
@@ -419,9 +476,9 @@ const handleSelected = (parentDiv, selectIcon, divBottomIconsNote, pinIcon, divB
         iconsSelected[i].addEventListener("click", () => {
             // if the icon is pin icon and parent div has a class of selected
             if (parentDiv.classList.contains("selected")) {
-                if (iconsSelected[i].className === "pinIcon") {
+                if (iconsSelected[i].className === "pinIcon") { // 🟥
                     // remove selected and add pinned
-                    parentDiv.classList.remove("selected")
+                    // parentDiv.classList.remove("selected")
                     parentDiv.classList.add("pinned")
                         // apend parent div to actualePinnedContainer
                     apendProperly(parentDiv, pinnedContainer, actualePinnedContainer, containerNotes)
@@ -446,10 +503,39 @@ const handleSelected = (parentDiv, selectIcon, divBottomIconsNote, pinIcon, divB
                 } else if (iconsSelected[i].className === "reminderBell") {
                     console.log("reminder bell")
                 } else if (iconsSelected[i].className === "paleteIcon") {
+
+                    // containerPaleteColor.classList.add("noneColor") // make it display none
+                    containerPaleteColorTop.classList.remove("noneColor")
+                    const colorDiv = [...document.querySelectorAll(".containerPaleteColorTop div")]
+                    for (let x = 0; x < colorDiv.length; x++) {
+                        colorDiv[x].addEventListener("click", (e) => { // set border color of parentDiv when you click a cercle(color)
+                            if (parentDiv.classList.contains("selected")) {
+
+                                TopBar.classList.remove("zIndexMinus")
+                                selectIcon.style.visibility = "hidden"
+                                parentDivLength.splice(0, parentDivLength.length)
+                                parentDiv.style.borderColor = e.target.dataset.color
+                                parentDiv.classList.remove("selected")
+                                containerPaleteColorTop.classList.add("noneColor")
+                            }
+                        })
+                    }
+
+                    parentDiv.addEventListener("mouseover", () => {
+                        selectIcon.style.visibility = "visible"
+                        pinIcon.style.visibility = "visible"
+                        divBottomIconsNote.style.visibility = "visible"
+                    })
+                    parentDiv.addEventListener("mouseout", () => {
+                        selectIcon.style.visibility = "hidden"
+                        pinIcon.style.visibility = "hidden"
+                        divBottomIconsNote.style.visibility = "hidden"
+                    })
+
                     console.log("palete icon")
-                } else if (iconsSelected[i].className === "archiveIcon") {
+                } else if (iconsSelected[i].className === "archiveIcon") { // 🟥
                     parentDiv.classList.add("archived")
-                    parentDiv.classList.remove("selected")
+                        // parentDiv.classList.remove("selected")
                     TopBar.classList.remove("zIndexMinus")
                     parentDiv.style.border = "1px solid var(--myBorderColor)"
                     selectIcon.style.visibility = "hidden"
@@ -470,6 +556,7 @@ const handleSelected = (parentDiv, selectIcon, divBottomIconsNote, pinIcon, divB
                         containerNotes.appendChild(parentDiv)
                         return
                     }
+
                     console.log("archive icon")
                 } else if (iconsSelected[i].className === "deleteIcon") {
                     parentDiv.classList.add("deleted")
@@ -502,4 +589,19 @@ const handleSelected = (parentDiv, selectIcon, divBottomIconsNote, pinIcon, divB
 
         })
     }
+}
+
+const colors = ['red', 'blue', 'green', 'yellow', 'purple'] // colors for divs
+for (let i = 0; i < 5, i < colors.length; i++) { // loop the colors
+    const colorDiv = document.createElement("div"); // create the color cercle
+    colorDiv.setAttribute("data-color", colors[i]) // set a date attribute and set the value of it
+    colorDiv.style.backgroundColor = colorDiv.dataset.color // set the background color of cercle color
+    containerPaleteColorTop.appendChild(colorDiv)
+        // colorDiv.addEventListener("click", (e) => { // set border color of parentDiv when you click a cercle(color)
+        //     if (parentDiv.classList.contains("selected")) {
+
+    //         parentDiv.style.borderColor = e.target.dataset.color
+    //     }
+
+    // })
 }

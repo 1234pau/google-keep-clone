@@ -491,49 +491,55 @@ body {
 
 .AddCard .iconsAction {
     width: 100%;
-    height: 33%;
+    height: 30%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding-bottom: -30px;
+    justify-content: center;
     display: none;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    border-top: 1px solid var(--myBorderColor);
+    padding-top: 10px;
 }
 
 .AddCard .iconsAction .closeBtn {
-    width: 20%;
+    width: 100%;
     height: 95%;
     display: flex;
     align-items: center;
-    padding-top: 20px;
+    justify-content: center;
 }
 
-.AddCard .iconsAction .closeBtn button {
+.AddCard .iconsAction .closeBtn .closeBtnItself {
     font-size: 20px;
     font-weight: 500;
     border: none;
     outline: none;
     background-color: transparent;
     color: white;
-    width: 80px;
-    height: 40px;
+    width: 100%;
+    height: 100%;
     border-radius: 5px;
     cursor: pointer;
+    padding: 10px;
 }
 
 .AddCard .iconsAction .closeBtn button:hover {
     background-color: var(--myHoverNavColor);
 }
 
-.AddCard .iconsAction .iconsBtn {
+
+/* .AddCard .iconsAction .iconsBtn {
     padding-top: 20px;
     width: 45%;
     height: 33%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-}
+} */
 
-.AddCard .iconsAction .iconsBtn div {
+
+/* .AddCard .iconsAction .iconsBtn div {
     border-radius: 50px;
     cursor: pointer;
     width: 50px;
@@ -542,7 +548,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-}
+} */
 
 .AddCard .iconsAction .iconsBtn div:hover {
     background-color: var(--myHoverNavColor);
@@ -726,6 +732,7 @@ body {
     border: 1px solid var(--myBorderColor);
     margin: 10px;
     padding: 5px;
+    cursor: pointer;
 }
 
 .containerImage {
@@ -777,6 +784,29 @@ body {
     justify-content: space-between;
     position: absolute;
     /* display: none; */
+}
+
+.containerPaleteColorTop {
+    width: 200px;
+    height: 40px;
+    padding: 10px;
+    background-color: var(--myBackgroundColor);
+    border: 1px solid var(--myBorderColor);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    top: 70px;
+    left: -1;
+    right: 0;
+}
+
+.containerPaleteColorTop>div {
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+    cursor: pointer;
 }
 
 .noneColor {
