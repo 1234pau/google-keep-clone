@@ -78,8 +78,6 @@ export class PinNote extends HTMLElement {
             pinIcon.style.display = "block"
             checkPin.style.display = "none"
         }
-
-
     }
 }
 customElements.define("pin-note", PinNote)
