@@ -313,8 +313,12 @@ const createCardNote = () => {
                 iconsSelected[0].children[1].addEventListener("click", () => {
 
                     containerNotes.appendChild(parentDiv)
-                    parentDiv.classList.remove("selected")
                     parentDiv.classList.remove("pinned")
+                    parentDiv.classList.remove("selected")
+                        // make pin icon empty from card when is unpinned
+                    pinIconNote.shadowRoot.children[1].children[0].style.display = "block"
+                    pinIconNote.shadowRoot.children[1].children[1].style.display = "none"
+
                     iconsSelected[0].children[1].style.display = "none"
                     iconsSelected[0].children[0].style.display = "block"
                     TopBar.classList.remove("zIndexMinus")
@@ -343,7 +347,7 @@ const createCardNote = () => {
             } else {
                 return
             }
-        })
+        }, false)
         // handle archiveIcon and function
     archiveIcon.addEventListener("click", () => {
             if (parentDiv.classList.contains("archived")) {
@@ -410,9 +414,8 @@ const apendProperly = (parentDiv, pinnedContainer, actualePinnedContainer, conta
         if (parentDiv.classList.contains("pinned")) {
             pinnedContainer.classList.remove("none")
             actualePinnedContainer.appendChild(parentDiv)
-            return actualePinnedContainer.appendChild(parentDiv)
         } else { // if not append to containerNotes
-            return containerNotes.appendChild(parentDiv)
+            containerNotes.appendChild(parentDiv)
         }
     }
     // handle display for sections
@@ -483,19 +486,21 @@ const handleSelected = (parentDiv, selectIcon, divBottomIconsNote, pinIcon, divB
         iconsSelected[i].addEventListener("click", () => {
             // if the icon is pin icon and parent div has a class of selected
             if (parentDiv.classList.contains("selected")) {
-                if (iconsSelected[i].className === "pinIcon") { // 🟥
+                if (iconsSelected[i].className === "pinIconDiv") { // 🟥
                     // remove selected and add pinned
                     parentDiv.classList.remove("selected")
-
                     parentDiv.classList.add("pinned")
                         // apend parent div to actualePinnedContainer
                     apendProperly(parentDiv, pinnedContainer, actualePinnedContainer, containerNotes)
-                        // show top bar
+
+                    // show top bar
                     TopBar.classList.remove("zIndexMinus")
                     parentDiv.style.border = "1px solid var(--myBorderColor)"
                     selectIcon.style.visibility = "hidden"
                         // remove the content of parentDivLength in order to work properly when i select again
                     parentDivLength.splice(0, parentDivLength.length)
+                    iconsSelected[i].children[0].style.display = "none"
+                    iconsSelected[i].children[1].style.display = "block"
                         // handle mouseover and mouseout on parentDiv
                     parentDiv.addEventListener("mouseover", () => {
                         selectIcon.style.visibility = "visible"
@@ -596,7 +601,7 @@ const handleSelected = (parentDiv, selectIcon, divBottomIconsNote, pinIcon, divB
                 }
             }
 
-        })
+        }, false)
     }
 }
 

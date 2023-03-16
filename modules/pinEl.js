@@ -74,9 +74,11 @@ export class PinNote extends HTMLElement {
         if (this.parentElement.classList.contains("pinned")) {
             pinIcon.style.display = "none"
             checkPin.style.display = "block"
+
         } else {
             pinIcon.style.display = "block"
             checkPin.style.display = "none"
+
         }
     }
 }
