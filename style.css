@@ -350,8 +350,8 @@ body {
 }
 
 .MidleContent {
-    border: 1px solid red;
-    width: 80%;
+    /* border: 1px solid red; */
+    width: 75%;
     height: calc(100vh - 75px);
     float: right;
     margin-top: -550px;
@@ -564,7 +564,7 @@ body {
     width: 95%;
     margin: 20px auto;
     padding: 10px;
-    border: 1px solid rgb(0, 255, 0);
+    /* border: 1px solid rgb(0, 255, 0); */
 }
 
 .normalFlex {
@@ -618,7 +618,7 @@ body {
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    border: 1px solid rgb(0, 255, 0);
+    /* border: 1px solid rgb(0, 255, 0); */
     display: none;
 }
 
@@ -630,7 +630,7 @@ body {
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    border: 1px solid rgb(0, 255, 0);
+    /* border: 1px solid rgb(0, 255, 0); */
     display: none;
 }
 
@@ -642,7 +642,7 @@ body {
     align-items: center;
     justify-content: flex-start;
     flex-wrap: wrap;
-    border: 1px solid rgb(0, 255, 0);
+    /* border: 1px solid rgb(0, 255, 0); */
     display: none;
 }
 
@@ -654,7 +654,7 @@ body {
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    border: 1px solid rgb(0, 255, 0);
+    /* border: 1px solid rgb(0, 255, 0); */
     display: none;
 }
 
@@ -818,4 +818,73 @@ body {
     height: 30px;
     border-radius: 50px;
     cursor: pointer;
+}
+
+.containerDateAndTime {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--myBackgroundColor);
+    border: 1px solid var(--myBorderColor);
+    border-radius: 5px;
+    width: 250px;
+    height: 110px;
+    position: absolute;
+    margin-left: -26px;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.noneDate {
+    display: none;
+}
+
+.inputDate {
+    background-color: transparent;
+    border: none;
+    border-radius: 5px;
+    width: 95%;
+    height: 30px;
+    color: white;
+    outline: none;
+    color-scheme: dark;
+}
+
+.inputDate:before {
+    content: "Pick a date:";
+    padding-right: 50px;
+}
+
+.inputTime {
+    background-color: transparent;
+    border: none;
+    border-radius: 5px;
+    width: 95%;
+    height: 30px;
+    color: white;
+    outline: none;
+    color-scheme: dark;
+}
+
+.inputTime:before {
+    content: "Pick an hour:";
+    padding-right: 50px;
+}
+
+.saveDT {
+    width: 95%;
+    height: 30px;
+    background-color: #2e2e2e;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: 500;
+    font-size: 17px;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.saveDT:hover {
+    background-color: #3b3b3b;
 }

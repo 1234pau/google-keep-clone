@@ -90,7 +90,7 @@ menuIcon.addEventListener("click", () => {
         } else if (cond1 === false) {
             cond1 = true
             LeftBar.style.width = "250px"
-            MidleContent.style.width = "80%"
+            MidleContent.style.width = "75%"
             for (const icon of iconNav) {
                 icon.classList.remove("iconNavClass")
                 icon.classList.add("iconNav")
@@ -135,7 +135,7 @@ document.addEventListener("click", (e) => {
 textNoteImput.focus()
     // create card function
 let n = 1
-let lengthOfParent
+let db
 const createCardNote = () => {
     const parentDiv = document.createElement("div") // create the parent div
     parentDiv.classList.add("parentDivNote")
@@ -200,6 +200,23 @@ const createCardNote = () => {
 
     const reminderBel = document.createElement("reminder-note", ReminderNote)
     divBottomIconsNoteContainer.appendChild(reminderBel)
+
+    const containerDateAndTime = document.createElement("div")
+    containerDateAndTime.classList.add("containerDateAndTime")
+    containerDateAndTime.classList.add("noneDate")
+    const inputDate = document.createElement("input")
+    inputDate.classList.add("inputDate")
+    inputDate.type = "date"
+    const inputTime = document.createElement("input")
+    inputTime.classList.add("inputTime")
+    inputTime.type = "time"
+    const buttonSave = document.createElement("button")
+    buttonSave.classList.add("saveDT")
+    buttonSave.innerHTML = "Save"
+    containerDateAndTime.appendChild(inputDate)
+    containerDateAndTime.appendChild(inputTime)
+    containerDateAndTime.appendChild(buttonSave)
+    parentDiv.appendChild(containerDateAndTime)
 
     const paleteIcon = document.createElement("palete-note", PaleteNote)
     divBottomIconsNoteContainer.appendChild(paleteIcon)
@@ -408,7 +425,55 @@ const createCardNote = () => {
     handleSelected(parentDiv, selectIcon, divBottomIconsNote, pinIcon, divBottomIconsNoteContainer, divBottomIconsDelete, pinIconNote, containerDelete)
 
     apendProperly(parentDiv, pinnedContainer, actualePinnedContainer, containerNotes)
+    reminderBel.addEventListener("click", () => {
+        containerDateAndTime.classList.toggle("noneDate")
+    })
+    buttonSave.addEventListener("click", () => {
+        // console.log(inputDate.value, inputTime.value)
+        const day = inputDate.value
+        const time = inputTime.value
+        const openReqDb = window.indexedDB.open("ContentCard", 1)
+            // console.log(openReqDb)
 
+        openReqDb.onerror = (e) => {
+            alert("Data Base not found")
+        }
+        openReqDb.onsuccess = () => {
+            db = openReqDb.result
+            displayData()
+
+        }
+        openReqDb.onupgradeneeded = () => {
+            const objectStore = db.createObjectStore("ContentCard", { keyPath: "textCard" })
+
+            objectStore.createIndex("day", "day", { unique: false })
+            objectStore.createIndex("time", "time", { unique: false })
+                // console.log(objectStore)
+        }
+
+
+    })
+
+}
+const displayData = () => {
+    const objectStore = db.transaction("ContentCard").objectStore("ContentCard")
+        // console.log(objectStore)
+    objectStore.openCursor().onsuccess = (e) => {
+            const cursor = e.target.result
+            console.log(cursor)
+
+            if (!cursor) {
+                // No more items to iterate through, we quit.
+                alert("No more items to iterate through, we quit.")
+                return;
+            }
+        }
+        // objectStore.onerror = () => {
+        //     alert("not found")
+        // }
+        // objectStore.onsuccess = () => {
+        //     alert("great")
+        // }
 }
 const apendProperly = (parentDiv, pinnedContainer, actualePinnedContainer, containerNotes) => {
         if (parentDiv.classList.contains("pinned")) {
