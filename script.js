@@ -51,6 +51,7 @@ import { selectFuture } from "./modules/selectFuture.js"
 import { RestoreNote } from "./modules/restoreEl.js"
 import { DeleteForeverNote } from "./modules/deleteForeverEl.js"
 import { handleSections } from "./modules/handleSections.js"
+import { setNotification } from "./modules/setNotification.js"
 
 
 // make search bar styling in white when click
@@ -210,6 +211,7 @@ const createCardNote = () => {
     const inputTime = document.createElement("input")
     inputTime.classList.add("inputTime")
     inputTime.type = "time"
+    inputTime.step = "1"
     const buttonSave = document.createElement("button")
     buttonSave.classList.add("saveDT")
     buttonSave.innerHTML = "Save"
@@ -425,56 +427,28 @@ const createCardNote = () => {
     handleSelected(parentDiv, selectIcon, divBottomIconsNote, pinIcon, divBottomIconsNoteContainer, divBottomIconsDelete, pinIconNote, containerDelete)
 
     apendProperly(parentDiv, pinnedContainer, actualePinnedContainer, containerNotes)
+        // open and close containerDateAndTime
     reminderBel.addEventListener("click", () => {
-        containerDateAndTime.classList.toggle("noneDate")
-    })
+            containerDateAndTime.classList.toggle("noneDate")
+        })
+        // set the Notification to fire when user set a time
     buttonSave.addEventListener("click", () => {
-        // console.log(inputDate.value, inputTime.value)
-        const day = inputDate.value
-        const time = inputTime.value
-        const openReqDb = window.indexedDB.open("ContentCard", 1)
-            // console.log(openReqDb)
-
-        openReqDb.onerror = (e) => {
-            alert("Data Base not found")
+        let time = inputTime.value
+        let date = inputDate.value
+        if (!("Notification" in window)) {
+            alert("This browser does not support desktop notification");
+        } else if (Notification.permission === "granted") {
+            setNotification(date, time, noteValue) // function in setNotification.js file
+        } else if (Notification.permission !== "denied") {
+            Notification.requestPermission().then((permission) => {
+                if (permission === "granted") {
+                    setNotification(date, time, noteValue)
+                }
+            })
         }
-        openReqDb.onsuccess = () => {
-            db = openReqDb.result
-            displayData()
-
-        }
-        openReqDb.onupgradeneeded = () => {
-            const objectStore = db.createObjectStore("ContentCard", { keyPath: "textCard" })
-
-            objectStore.createIndex("day", "day", { unique: false })
-            objectStore.createIndex("time", "time", { unique: false })
-                // console.log(objectStore)
-        }
-
-
     })
-
 }
-const displayData = () => {
-    const objectStore = db.transaction("ContentCard").objectStore("ContentCard")
-        // console.log(objectStore)
-    objectStore.openCursor().onsuccess = (e) => {
-            const cursor = e.target.result
-            console.log(cursor)
 
-            if (!cursor) {
-                // No more items to iterate through, we quit.
-                alert("No more items to iterate through, we quit.")
-                return;
-            }
-        }
-        // objectStore.onerror = () => {
-        //     alert("not found")
-        // }
-        // objectStore.onsuccess = () => {
-        //     alert("great")
-        // }
-}
 const apendProperly = (parentDiv, pinnedContainer, actualePinnedContainer, containerNotes) => {
         if (parentDiv.classList.contains("pinned")) {
             pinnedContainer.classList.remove("none")
