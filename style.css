@@ -820,6 +820,22 @@ body {
     cursor: pointer;
 }
 
+.containerDateAndTimeTop {
+    border: 1px solid var(--myBorderColor);
+    border-radius: 5px;
+    width: 250px;
+    height: 110px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--myBackgroundColor);
+    position: absolute;
+    right: 0px;
+    margin-top: 200px;
+    padding: 10px;
+}
+
 .containerDateAndTime {
     display: flex;
     flex-direction: column;

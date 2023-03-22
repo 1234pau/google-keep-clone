@@ -35,6 +35,7 @@ const lengthOfItems = document.querySelector(".lengthOfItems")
 const imageIc = document.querySelector(".imageIc")
 const file = document.querySelector("#file-input")
 const containerPaleteColorTop = document.querySelector(".containerPaleteColorTop")
+const containerDateAndTimeTop = document.querySelector(".containerDateAndTimeTop")
 const iconsSelected = [...document.querySelectorAll(".iconsSelected div")]
 const iconNav = [...document.querySelectorAll(".iconNav")]
 
@@ -77,5 +78,6 @@ export {
     imageIc,
     file,
     iconsSelected,
-    containerPaleteColorTop
+    containerPaleteColorTop,
+    containerDateAndTimeTop
 }

@@ -38,7 +38,9 @@ import {
     imageIc,
     file,
     iconsSelected,
-    containerPaleteColorTop
+    containerPaleteColorTop,
+    containerDateAndTimeTop
+
 } from "./modules/elements.js"
 import { ReminderNote } from "./modules/reminderEl.js"
 import { PaleteNote } from "./modules/paleteEl.js"
@@ -424,7 +426,7 @@ const createCardNote = () => {
         file.value = "" // clear the value of file in order to select the same file one each other
         console.log("file removed")
     })
-    handleSelected(parentDiv, selectIcon, divBottomIconsNote, pinIcon, divBottomIconsNoteContainer, divBottomIconsDelete, pinIconNote, containerDelete)
+    handleSelected(parentDiv, selectIcon, divBottomIconsNote, pinIcon, divBottomIconsNoteContainer, divBottomIconsDelete, pinIconNote, containerDelete, noteValue)
 
     apendProperly(parentDiv, pinnedContainer, actualePinnedContainer, containerNotes)
         // open and close containerDateAndTime
@@ -446,6 +448,7 @@ const createCardNote = () => {
                 }
             })
         }
+        containerDateAndTime.classList.add("noneDate")
     })
 }
 
@@ -520,7 +523,7 @@ const getSrcImage = () => {
 }
 file.addEventListener("change", getSrcImage, false)
     // add handleres on each icon in top bar
-const handleSelected = (parentDiv, selectIcon, divBottomIconsNote, pinIcon, divBottomIconsNoteContainer, divBottomIconsDelete, pinIconNote, containerDelete) => {
+const handleSelected = (parentDiv, selectIcon, divBottomIconsNote, pinIcon, divBottomIconsNoteContainer, divBottomIconsDelete, pinIconNote, containerDelete, noteValue) => {
     for (let i = 0; i < iconsSelected.length; i++) { // loop through each icon
         iconsSelected[i].addEventListener("click", () => {
             // if the icon is pin icon and parent div has a class of selected
@@ -554,6 +557,30 @@ const handleSelected = (parentDiv, selectIcon, divBottomIconsNote, pinIcon, divB
 
                     console.log("pin icon")
                 } else if (iconsSelected[i].className === "reminderBell") {
+                    containerDateAndTimeTop.classList.toggle("noneDate")
+                    const saveDT = document.querySelector(".saveDT")
+                    saveDT.addEventListener("click", () => {
+                        const date = document.querySelector(".inputDate").value
+                        const time = document.querySelector(".inputTime").value
+                            // const noteValue = document.querySelector(".noteValue")
+                        setNotification(date, time, noteValue)
+                        parentDiv.classList.remove("selected")
+                        TopBar.classList.remove("zIndexMinus")
+                        parentDiv.style.border = "1px solid var(--myBorderColor)"
+                        selectIcon.style.visibility = "hidden"
+                        parentDivLength.splice(0, parentDivLength.length)
+                        containerDateAndTimeTop.classList.add("noneDate")
+                    })
+                    parentDiv.addEventListener("mouseover", () => {
+                        selectIcon.style.visibility = "visible"
+                        pinIcon.style.visibility = "visible"
+                        divBottomIconsNote.style.visibility = "visible"
+                    })
+                    parentDiv.addEventListener("mouseout", () => {
+                        selectIcon.style.visibility = "hidden"
+                        pinIcon.style.visibility = "hidden"
+                        divBottomIconsNote.style.visibility = "hidden"
+                    })
                     console.log("reminder bell")
                 } else if (iconsSelected[i].className === "paleteIcon") {
 
@@ -650,11 +677,4 @@ for (let i = 0; i < 5, i < colors.length; i++) { // loop the colors
     colorDiv.setAttribute("data-color", colors[i]) // set a date attribute and set the value of it
     colorDiv.style.backgroundColor = colorDiv.dataset.color // set the background color of cercle color
     containerPaleteColorTop.appendChild(colorDiv)
-        // colorDiv.addEventListener("click", (e) => { // set border color of parentDiv when you click a cercle(color)
-        //     if (parentDiv.classList.contains("selected")) {
-
-    //         parentDiv.style.borderColor = e.target.dataset.color
-    //     }
-
-    // })
 }
