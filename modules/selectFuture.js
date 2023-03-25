@@ -8,7 +8,6 @@ export const selectFuture = (parentDivLength, parentDiv, TopBar, lengthOfItems, 
         } else {
             seen.set(parentDivLength[i], parentDivLength[i])
             parentDiv.classList.add("selected")
-
         }
     }
     if (seen.size >= 1) {

@@ -53,7 +53,7 @@ import { selectFuture } from "./modules/selectFuture.js"
 import { RestoreNote } from "./modules/restoreEl.js"
 import { DeleteForeverNote } from "./modules/deleteForeverEl.js"
 import { handleSections } from "./modules/handleSections.js"
-import { setNotification } from "./modules/setNotification.js"
+import { setNotification, setNotificationTop } from "./modules/setNotification.js"
 
 
 // make search bar styling in white when click
@@ -301,6 +301,7 @@ const createCardNote = () => {
     selectIcon.addEventListener("click", () => {
             parentDivLength.push(parentDiv.id)
             selectFuture(parentDivLength, parentDiv, TopBar, lengthOfItems, selectIcon, pinIcon, divBottomIconsNote)
+
             if (parentDiv.classList.contains("archived") && parentDiv.classList.contains("selected")) {
                 iconsSelected[3].children[1].style.display = "block"
                 iconsSelected[3].children[1].addEventListener("click", () => {
@@ -371,8 +372,29 @@ const createCardNote = () => {
         }, false)
         // handle archiveIcon and function
     archiveIcon.addEventListener("click", () => {
+            const iconToShow = document.querySelector(".beckgroundIcon")
+                // const parentDiv = document.querySelector(".parentDivNote")
+
+            if (containerArchive.children !== parentDiv) {
+                console.log(true)
+                containerArchive.classList.remove("withChildren")
+                iconToShow.style.display = "flex"
+                    // const div = document.createElement("div")
+                    // div.classList.add("beckgroundIcon")
+                    // const svg = `<svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3H4a4 4 0 0 0 2-3v-3a7 7 0 0 1 4-6M9 17v1a3 3 0 0 0 6 0v-1"/></svg>`
+                    // const h1 = document.createElement("h1")
+                    // h1.innerHTML = "You don`t have any reminder"
+                    // div.appendChild(svg && h1)
+                    // containerArchive.appendChild(div)
+            } else if (!containerArchive.classList.contains("withChildren")) {
+
+                console.log(false)
+                iconToShow.style.display = "none"
+
+            }
             if (parentDiv.classList.contains("archived")) {
                 containerArchive.appendChild(parentDiv)
+                containerArchive.classList.add("withChildren")
             } else {
                 containerNotes.appendChild(parentDiv)
                 return
@@ -435,21 +457,34 @@ const createCardNote = () => {
         })
         // set the Notification to fire when user set a time
     buttonSave.addEventListener("click", () => {
-        let time = inputTime.value
-        let date = inputDate.value
-        if (!("Notification" in window)) {
-            alert("This browser does not support desktop notification");
-        } else if (Notification.permission === "granted") {
-            setNotification(date, time, noteValue) // function in setNotification.js file
-        } else if (Notification.permission !== "denied") {
-            Notification.requestPermission().then((permission) => {
-                if (permission === "granted") {
-                    setNotification(date, time, noteValue)
-                }
-            })
-        }
-        containerDateAndTime.classList.add("noneDate")
-    })
+            let time = inputTime.value
+            let date = inputDate.value
+            if (!("Notification" in window)) {
+                alert("This browser does not support desktop notification");
+            } else if (Notification.permission === "granted") {
+                setNotification(date, time, noteValue) // function in setNotification.js file
+            } else if (Notification.permission !== "denied") {
+                Notification.requestPermission().then((permission) => {
+                    if (permission === "granted") {
+                        setNotification(date, time, noteValue)
+                    }
+                })
+            }
+            containerDateAndTime.classList.add("noneDate")
+        })
+        /*when the user click parentDiv (card) element, it will refill the imputs in AddCard with the values of
+        titleValue and noteValue in order to crete a new card or to save the same note
+        */
+        // parentDiv.addEventListener("click", () => {
+        //     titleAndPinIcon.style.display = "flex" // show titleAndPinIcon and iconsAction
+        //     iconsAction.style.display = "flex"
+        //     const TITLE_VALUE = titleValue.innerHTML // get the values of the card
+        //     const NOTE_VALUE = noteValue.innerHTML
+        //     titleInput.value = TITLE_VALUE // fill the imputs with the values of the card
+        //     textNoteImput.value = NOTE_VALUE
+        //     parentDiv.remove() // remove the clicked card
+        //     textNoteImput.focus()
+        // }, false)
 }
 
 const apendProperly = (parentDiv, pinnedContainer, actualePinnedContainer, containerNotes) => {
@@ -563,7 +598,17 @@ const handleSelected = (parentDiv, selectIcon, divBottomIconsNote, pinIcon, divB
                         const date = document.querySelector(".inputDate").value
                         const time = document.querySelector(".inputTime").value
                             // const noteValue = document.querySelector(".noteValue")
-                        setNotification(date, time, noteValue)
+                        if (!("Notification" in window)) {
+                            alert("This browser does not support desktop notification");
+                        } else if (Notification.permission === "granted") {
+                            setNotificationTop(date, time, lengthOfItems) // function in setNotification.js file
+                        } else if (Notification.permission !== "denied") {
+                            Notification.requestPermission().then((permission) => {
+                                if (permission === "granted") {
+                                    setNotificationTop(date, time, lengthOfItems)
+                                }
+                            })
+                        }
                         parentDiv.classList.remove("selected")
                         TopBar.classList.remove("zIndexMinus")
                         parentDiv.style.border = "1px solid var(--myBorderColor)"
@@ -678,3 +723,6 @@ for (let i = 0; i < 5, i < colors.length; i++) { // loop the colors
     colorDiv.style.backgroundColor = colorDiv.dataset.color // set the background color of cercle color
     containerPaleteColorTop.appendChild(colorDiv)
 }
+// const containerArchive = document.querySelector(".containerArchive")
+const iconToShow = document.querySelector(".beckgroundIcon")
+const parentDiv = document.querySelector(".parentDivNote")

@@ -1,5 +1,6 @@
 import { handleDisplay } from "../script.js"
-
+const iconToShow = document.querySelector(".beckgroundIcon")
+const parentDiv = document.querySelector(".parentDivNote")
 export const handleSections = (iconNav, containerNotes, containerReminder, containerLabel, containerArchive, containerDelete, AddCard) => {
     for (const icon of iconNav) {
         icon.addEventListener("click", () => {
@@ -20,6 +21,7 @@ export const handleSections = (iconNav, containerNotes, containerReminder, conta
                 }
             } else if (icon.classList.contains("archive")) {
                 if (containerArchive) {
+
                     AddCard.style.display = "none" // make AddCard disapear when click archive button in left bat
                     handleDisplay(containerArchive)
 
